@@ -14,6 +14,8 @@ import android.view.WindowManager.LayoutParams.TYPE_PHONE
  * Created by ErickSumargo on 01/06/20.
  */
 
+const val SUBJECT_DISMISS_DIALOG = 100
+
 val toggleLayoutParams: LayoutParams =
     if (SDK_INT >= O) {
         LayoutParams(
