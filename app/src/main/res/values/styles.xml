@@ -7,4 +7,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Text.Normal" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="Text.Bold" parent="Text.Normal">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DialogActivityTheme" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowSoftInputMode">stateAlwaysVisible</item>
+        <item name="android:backgroundDimAmount">0.25</item>
+    </style>
 </resources>
