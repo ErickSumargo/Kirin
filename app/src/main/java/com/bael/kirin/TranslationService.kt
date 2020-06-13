@@ -2,31 +2,50 @@ package com.bael.kirin
 
 import android.app.Service
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.IBinder
+import android.os.Messenger
 import android.view.Gravity.START
 import android.view.Gravity.TOP
 import android.view.LayoutInflater
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+import android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
 import androidx.core.widget.addTextChangedListener
 import com.bael.kirin.databinding.ToggleLayoutBinding
 import com.bael.kirin.databinding.TranslationLayoutBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+
 
 /**
  * Created by ErickSumargo on 01/06/20.
  */
 
 class TranslationService :
-    Service() {
+    Service(),
+    CoroutineScope,
+    OnKeyEventPreImeListener,
+    OnDialogListener {
     private lateinit var toggleBinder: ToggleLayoutBinding
     private lateinit var translationBinder: TranslationLayoutBinding
 
     private val layoutInflater: LayoutInflater by lazy { LayoutInflater.from(this) }
     private val layoutManager: LayoutManager by lazy { LayoutManager(this) }
 
-    private var isTranslationActived: Boolean = false
+    private val messenger: Messenger by lazy { Messenger(MessengerHandler(this)) }
 
-    override fun onBind(intent: Intent): IBinder? = null
+    override val coroutineContext: CoroutineContext get() = Main
+
+    private var isTranslationActived: Boolean = false
+    private var isDialogOpened: Boolean = false
+
+    override fun onBind(intent: Intent): IBinder? = messenger.binder
 
     override fun onCreate() {
         super.onCreate()
@@ -42,17 +61,22 @@ class TranslationService :
                         layoutParams = toggleLayoutParams,
                         onClickLayout = {
                             if (isTranslationActived) {
+                                isTranslationActived = false
+
+                                if (isDialogOpened) {
+                                    onHideSoftKeyboard()
+                                } else {
+                                    onDismissDialog()
+                                }
                                 binder.toggleIcon.setImageDrawable(appIcon.apply {
-                                    setTint(
-                                        GRAY_LIGHT
-                                    )
+                                    setTint(GRAY_LIGHT)
                                 })
-                                removeTranslationLayout()
                             } else {
+                                isTranslationActived = true
                                 addTranslationLayout()
+
                                 binder.toggleIcon.setImageDrawable(appIcon.apply { setTint(PRIMARY) })
                             }
-                            isTranslationActived = !isTranslationActived
                         },
                         onMoveLayout = { params ->
                             layoutManager.updateLayout(layout, params)
@@ -67,6 +91,10 @@ class TranslationService :
         }
 
         translationBinder = TranslationLayoutBinding.inflate(layoutInflater).also { binder ->
+            binder.translationLayout.also { layout ->
+                layout.setOnKeyPressListener(this)
+            }
+
             binder.sourceLanguageLabel.also { label ->
                 label.text = "English"
             }
@@ -80,6 +108,17 @@ class TranslationService :
             }
 
             binder.sourceLanguageInput.also { input ->
+                input.setOnFocusChangeListener { _, focused ->
+                    if (focused) {
+                        updateTranslationLayout(FLAG_NOT_TOUCH_MODAL)
+                        launch(coroutineContext) {
+                            delay(100)
+                            showSoftKeyboard()
+                            showDialog()
+                        }
+                    }
+                }
+
                 input.addTextChangedListener { editable ->
                     translationBinder.clearIcon.visibility =
                         VISIBLE.takeIf { editable.isNullOrEmpty().not() } ?: INVISIBLE
@@ -125,8 +164,45 @@ class TranslationService :
         translationBinder.sourceLanguageInput.requestFocus()
     }
 
+    private fun updateTranslationLayout(flag: Int) {
+        layoutManager.updateLayout(
+            translationBinder.translationLayout,
+            translationLayoutParams.also { it.flags = flag }
+        )
+    }
+
     private fun removeTranslationLayout() {
         layoutManager.removeLayout(translationBinder.translationLayout)
+    }
+
+    override fun onHideSoftKeyboard() {
+        broadcastData(Intent(SUBJECT_DISMISS_DIALOG.hashCode().toString()))
+    }
+
+    override fun onDismissDialog() {
+        translationBinder.sourceLanguageInput.also { input ->
+            input.clearFocus()
+            hideSoftKeyboard(input)
+        }
+
+        if (isTranslationActived) {
+            updateTranslationLayout(FLAG_NOT_FOCUSABLE)
+        } else {
+            removeTranslationLayout()
+        }
+
+        isDialogOpened = false
+    }
+
+    fun showDialog() {
+        Intent(this, DialogActivity::class.java).apply {
+            addFlags(FLAG_ACTIVITY_NEW_TASK)
+        }.also(::startActivity)
+        isDialogOpened = true
+    }
+
+    fun broadcastData(intent: Intent) {
+        sendBroadcast(intent)
     }
 
     override fun onDestroy() {
