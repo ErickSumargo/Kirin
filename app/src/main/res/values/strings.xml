@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Kirin</string>
 
+    <string name="translate">Translate</string>
+    <string name="swap_content_description">Swap these two languages</string>
+    <string name="clear_content_description">Clear source text</string>
     <string name="toggle_content_description">Show or hide floating translation service</string>
 </resources>
