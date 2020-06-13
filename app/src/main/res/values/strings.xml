@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Kirin</string>
+
+    <string name="toggle_content_description">Show or hide floating translation service</string>
 </resources>
