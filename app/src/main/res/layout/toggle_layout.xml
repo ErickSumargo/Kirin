@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/toggleIcon"
-        android:layout_width="@dimen/space_56"
-        android:layout_height="@dimen/space_56"
+        android:layout_width="@dimen/space_48"
+        android:layout_height="@dimen/space_48"
         android:contentDescription="@string/toggle_content_description" />
 
 </androidx.cardview.widget.CardView>

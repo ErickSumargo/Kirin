@@ -25,7 +25,6 @@ class LayoutManager(context: Context) {
     }
 
     fun removeLayout(view: View) {
-        if (view.windowToken == null) return
         windowManager.removeView(view)
     }
 }
