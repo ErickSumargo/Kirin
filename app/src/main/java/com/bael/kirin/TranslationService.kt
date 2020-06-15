@@ -5,6 +5,9 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.IBinder
 import android.os.Messenger
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.Gravity.START
 import android.view.Gravity.TOP
 import android.view.LayoutInflater
@@ -12,16 +15,14 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-import androidx.core.widget.addTextChangedListener
+import com.bael.kirin.State.Editing
 import com.bael.kirin.databinding.ToggleLayoutBinding
 import com.bael.kirin.databinding.TranslationLayoutBinding
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
-
 
 /**
  * Created by ErickSumargo on 01/06/20.
@@ -44,6 +45,8 @@ class TranslationService :
 
     private var isTranslationActived: Boolean = false
     private var isDialogOpened: Boolean = false
+
+    private val presenter: Presenter = Presenter()
 
     override fun onBind(intent: Intent): IBinder? = messenger.binder
 
@@ -99,16 +102,28 @@ class TranslationService :
                 label.text = "English"
             }
 
-            binder.swapIcon.also { icon ->
-                icon.setOnClickListener {}
+            binder.swapIcon.apply {
+                presenter.render { state: State.Close ->
+                    Log.d("lala", "wkwk")
+                }
+
+                setOnClickListener {
+                    presenter.close()
+                }
             }
 
             binder.targetLanguageLabel.also { label ->
                 label.text = "Indonesia"
             }
 
-            binder.sourceLanguageInput.also { input ->
-                input.setOnFocusChangeListener { _, focused ->
+            binder.sourceLanguageInput.apply {
+                presenter.render { state: Editing ->
+                    if (state.reset) {
+                        setText("")
+                    }
+                }
+
+                setOnFocusChangeListener { _, focused ->
                     if (focused) {
                         updateTranslationLayout(FLAG_NOT_TOUCH_MODAL)
                         launch(coroutineContext) {
@@ -119,15 +134,26 @@ class TranslationService :
                     }
                 }
 
-                input.addTextChangedListener { editable ->
-                    translationBinder.clearIcon.visibility =
-                        VISIBLE.takeIf { editable.isNullOrEmpty().not() } ?: INVISIBLE
-                }
+                addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        presenter.setSourceLanguageText(p0.toString())
+                    }
+                })
             }
 
-            binder.clearIcon.also { icon ->
-                icon.setOnClickListener {
-                    translationBinder.sourceLanguageInput.text.clear()
+            binder.clearIcon.apply {
+                presenter.render { state: Editing ->
+                    visibility = VISIBLE.takeIf { state.text.isNotEmpty() } ?: INVISIBLE
+                }
+
+                setOnClickListener {
+                    presenter.clearSourceLanguageText()
                 }
             }
 
