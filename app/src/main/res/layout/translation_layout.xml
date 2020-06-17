@@ -23,12 +23,12 @@
             android:gravity="end"
             android:maxLines="1"
             android:textSize="@dimen/text_14"
-            app:layout_constraintEnd_toStartOf="@id/swapIcon"
+            app:layout_constraintEnd_toStartOf="@id/swapLanguageIcon"
             app:layout_constraintStart_toStartOf="@id/dividerView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/swapIcon"
+            android:id="@+id/swapLanguageIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="@dimen/space_8"
@@ -51,7 +51,7 @@
             android:maxLines="1"
             android:textSize="@dimen/text_14"
             app:layout_constraintEnd_toEndOf="@id/dividerView"
-            app:layout_constraintStart_toEndOf="@id/swapIcon"
+            app:layout_constraintStart_toEndOf="@id/swapLanguageIcon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
@@ -64,10 +64,10 @@
             android:background="#F1F2F5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/swapIcon" />
+            app:layout_constraintTop_toBottomOf="@id/swapLanguageIcon" />
 
         <EditText
-            android:id="@+id/sourceLanguageInput"
+            android:id="@+id/translationInput"
             style="@style/Text.Normal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -80,13 +80,13 @@
             android:paddingBottom="@dimen/space_12"
             android:textSize="@dimen/text_16"
             app:layout_constraintBottom_toTopOf="@id/swipeLayout"
-            app:layout_constraintEnd_toStartOf="@id/clearIcon"
+            app:layout_constraintEnd_toStartOf="@id/clearTextIcon"
             app:layout_constraintStart_toStartOf="@id/dividerView"
             app:layout_constraintTop_toBottomOf="@id/dividerView"
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:id="@+id/clearIcon"
+            android:id="@+id/clearTextIcon"
             android:layout_width="@dimen/space_20"
             android:layout_height="@dimen/space_20"
             android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -95,9 +95,9 @@
             android:focusable="true"
             android:src="@drawable/ic_close"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/sourceLanguageInput"
+            app:layout_constraintBottom_toBottomOf="@id/translationInput"
             app:layout_constraintEnd_toStartOf="@id/middlerView"
-            app:layout_constraintTop_toTopOf="@id/sourceLanguageInput" />
+            app:layout_constraintTop_toTopOf="@id/translationInput" />
 
         <View
             android:id="@+id/middlerView"

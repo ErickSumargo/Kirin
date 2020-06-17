@@ -3,6 +3,7 @@ package com.bael.kirin
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.bael.kirin.constant.SUBJECT_DISMISS_DIALOG
 
 /**
  * Created by ErickSumargo on 01/06/20.
