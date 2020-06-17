@@ -1,4 +1,4 @@
-package com.bael.kirin
+package com.bael.kirin.constant
 
 import android.graphics.PixelFormat.TRANSLUCENT
 import android.os.Build.VERSION.SDK_INT

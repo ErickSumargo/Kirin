@@ -11,6 +11,8 @@ import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
 import android.os.RemoteException
+import com.bael.kirin.constant.SUBJECT_DISMISS_DIALOG
+import com.bael.kirin.service.bubble.UI
 
 /**
  * Created by ErickSumargo on 01/06/20.
@@ -50,7 +52,7 @@ class DialogActivity : Activity() {
     override fun onStart() {
         super.onStart()
         // Bind to the service
-        Intent(this, TranslationService::class.java).also { intent ->
+        Intent(this, UI::class.java).also { intent ->
             bindService(intent, mConnection, BIND_AUTO_CREATE)
         }
     }

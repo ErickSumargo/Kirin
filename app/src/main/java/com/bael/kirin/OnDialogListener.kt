@@ -5,5 +5,5 @@ package com.bael.kirin
  */
 
 interface OnDialogListener {
-    fun onDismissDialog()
+    fun onDialogDismissed()
 }

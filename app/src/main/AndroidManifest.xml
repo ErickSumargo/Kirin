@@ -26,7 +26,7 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
 
         <service
-            android:name=".TranslationService"
+            android:name=".service.bubble.UI"
             android:exported="false" />
     </application>
 

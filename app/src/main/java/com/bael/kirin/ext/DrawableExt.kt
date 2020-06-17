@@ -1,4 +1,4 @@
-package com.bael.kirin
+package com.bael.kirin.ext
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable

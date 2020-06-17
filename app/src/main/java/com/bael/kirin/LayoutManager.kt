@@ -16,11 +16,12 @@ class LayoutManager(context: Context) {
     }
 
     fun addLayout(view: View, layoutParams: LayoutParams) {
-        if (view.windowToken != null) return
+        if (view.parent != null) return
         windowManager.addView(view, layoutParams)
     }
 
     fun updateLayout(view: View, layoutParams: LayoutParams) {
+        if (view.parent == null) return
         windowManager.updateViewLayout(view, layoutParams)
     }
 
