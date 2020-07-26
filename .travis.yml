@@ -5,16 +5,18 @@ android:
     - tools
     - platform-tools
 
-    - build-tools-29.0.3
-    - android-29
-
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
 
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
   before_install:
     - yes | sdkmanager "platforms;android-29"
-    - yes | sdkmanager --licenses
+    - yes | sdkmanager “build-tools;29.0.3"
 
   script:
-    - ./gradlew assembleDebug
+    - ./gradlew clean build
