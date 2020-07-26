@@ -1,0 +1,35 @@
+apply from: "$rootDir/libs/lib.gradle"
+
+def plugins = [
+    "kotlin-kapt",
+    "dagger.hilt.android.plugin"
+]
+
+plugins.forEach { plugin ->
+    apply plugin: plugin
+}
+
+def deps = [
+    "coroutines",
+    "hilt",
+    "security",
+    "translate"
+]
+
+deps.forEach { dep ->
+    apply from: "$rootDir/deps/${dep}.gradle"
+}
+
+def modules = [
+    "lib_data",
+    "lib_logger",
+    "lib_network",
+    "lib_security",
+    "lib_threading"
+]
+
+dependencies {
+    modules.forEach { module ->
+        implementation project(":$module")
+    }
+}

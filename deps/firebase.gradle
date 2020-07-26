@@ -1,0 +1,7 @@
+dependencies {
+    implementation "com.google.firebase:firebase-analytics-ktx:$deps.analytics"
+    implementation "com.google.firebase:firebase-crashlytics-ktx:$deps.crashlytics"
+    implementation "com.google.firebase:firebase-database-ktx:$deps.database"
+    implementation "com.google.firebase:firebase-messaging:$deps.messaging"
+    implementation "com.google.firebase:firebase-storage-ktx:$deps.storage"
+}

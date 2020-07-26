@@ -8,4 +8,6 @@ local.properties
 .externalNativeBuild
 .cxx
 *.apk
+*.aab
 *.iml
+*.json

@@ -1,2 +1,29 @@
-rootProject.name='Kirin'
-include ':app'
+rootProject.name = "Kirin"
+
+def modules = [
+    "app",
+    "feature_translation",
+    "lib_api_translation",
+    "lib_arch",
+    "lib_data",
+    "lib_logger",
+    "lib_message",
+    "lib_network",
+    "lib_preference",
+    "lib_resource",
+    "lib_security",
+    "lib_storage",
+    "lib_threading",
+    "lib_tracker",
+    "lib_ui"
+]
+
+modules.forEach { module ->
+    include ":$module"
+
+    if (module.contains("feature")) {
+        project(":$module").projectDir = new File("features/$module")
+    } else if (module.contains("lib")) {
+        project(":$module").projectDir = new File("libs/$module")
+    }
+}

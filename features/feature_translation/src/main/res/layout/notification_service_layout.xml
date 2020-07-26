@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/closeServiceLabel"
+    style="@style/Text.Normal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="@dimen/space_8"
+    android:text="@string/close_service"
+    android:textAlignment="center"
+    android:textColor="@color/cerise"
+    android:textSize="@dimen/text_14" />

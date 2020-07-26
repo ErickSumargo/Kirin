@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bael.kirin.feature.translation.view.KeyEventPreImeDispatcherCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/translationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/space_8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:focusableInTouchMode="true">
+
+        <Spinner
+            android:id="@+id/sourceLanguageSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_8"
+            android:background="@null"
+            android:gravity="end"
+            app:layout_constraintEnd_toStartOf="@id/swapLanguageIcon"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/dividerView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/swapLanguageIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/swap_content_description"
+            android:focusable="true"
+            android:src="@drawable/ic_compare_arrows"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/targetLanguageSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_8"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="@id/dividerView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/swapLanguageIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/dividerView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginTop="@dimen/space_8"
+            android:layout_marginEnd="@dimen/space_16"
+            android:background="@color/grayLighter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/swapLanguageIcon" />
+
+        <EditText
+            android:id="@+id/queryInput"
+            style="@style/Text.Normal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_4"
+            android:background="@null"
+            android:hint="@string/translate"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLines="8"
+            android:paddingTop="@dimen/space_12"
+            android:paddingBottom="@dimen/space_12"
+            android:textCursorDrawable="@drawable/cursor_drawable"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintBottom_toTopOf="@id/swipeLayout"
+            app:layout_constraintEnd_toStartOf="@id/clearQueryIcon"
+            app:layout_constraintStart_toStartOf="@id/dividerView"
+            app:layout_constraintTop_toBottomOf="@id/dividerView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/clearQueryIcon"
+            android:layout_width="@dimen/space_20"
+            android:layout_height="@dimen/space_20"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/clear_content_description"
+            android:focusable="true"
+            android:src="@drawable/ic_close"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/queryInput"
+            app:layout_constraintEnd_toStartOf="@id/middlerView"
+            app:layout_constraintTop_toTopOf="@id/queryInput" />
+
+        <View
+            android:id="@+id/middlerView"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerView" />
+
+        <TextView
+            android:id="@+id/translationInput"
+            style="@style/Text.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:enabled="false"
+            android:focusable="true"
+            android:hint="@string/dots"
+            android:maxLines="8"
+            android:paddingStart="@dimen/space_8"
+            android:paddingTop="@dimen/space_12"
+            android:paddingEnd="@dimen/space_4"
+            android:paddingBottom="@dimen/space_12"
+            android:textColor="@color/cerise"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintBottom_toTopOf="@id/swipeLayout"
+            app:layout_constraintEnd_toEndOf="@id/dividerView"
+            app:layout_constraintStart_toEndOf="@id/middlerView"
+            app:layout_constraintTop_toBottomOf="@id/dividerView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ProgressBar
+            android:id="@+id/loadingProgress"
+            android:layout_width="@dimen/space_24"
+            android:layout_height="@dimen/space_24"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/cerise"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/translationInput"
+            app:layout_constraintEnd_toEndOf="@id/dividerView"
+            app:layout_constraintStart_toEndOf="@id/middlerView"
+            app:layout_constraintTop_toTopOf="@id/translationInput" />
+
+        <FrameLayout
+            android:id="@+id/swipeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/space_24"
+            android:paddingVertical="@dimen/space_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:layout_width="32dp"
+                android:layout_height="3dp"
+                android:background="@color/grayLight" />
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.bael.kirin.feature.translation.view.KeyEventPreImeDispatcherCardView>

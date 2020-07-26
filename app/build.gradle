@@ -1,53 +1,89 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+def plugins = [
+    "com.android.application",
+    "com.google.gms.google-services",
+    "com.google.firebase.crashlytics",
+    "kotlin-android",
+    "kotlin-android-extensions",
+    "kotlin-kapt",
+    "dagger.hilt.android.plugin"
+]
+
+plugins.forEach { plugin ->
+    apply plugin: plugin
+}
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion sdk.compile
 
     defaultConfig {
         applicationId "com.bael.kirin"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion sdk.min
+        targetSdkVersion sdk.target
+        versionCode sdk.code
+        versionName sdk.version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [
+                analyticsEnabled    : "false",
+                crashlyticsEnabled  : "false",
+            ]
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [
+                analyticsEnabled    : "true",
+                crashlyticsEnabled  : "true",
+            ]
         }
     }
 
-    android {
-        buildFeatures {
-            viewBinding = true
-        }
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
+    packagingOptions {
+        exclude 'project.properties'
+        exclude 'META-INF/INDEX.LIST'
     }
 }
 
+def deps = [
+    "appcompat",
+    "hilt",
+    "lifecycle",
+    "translate"
+]
+
+deps.forEach { dep ->
+    apply from: "$rootDir/deps/${dep}.gradle"
+}
+
+def modules = [
+    "feature_translation",
+    "lib_api_translation",
+    "lib_arch",
+    "lib_data",
+    "lib_logger",
+    "lib_message",
+    "lib_network",
+    "lib_preference",
+    "lib_resource",
+    "lib_security",
+    "lib_storage",
+    "lib_threading",
+    "lib_tracker",
+    "lib_ui"
+]
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
-    implementation "androidx.cardview:cardview:1.0.0"
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7") {
-        exclude module: 'kotlin-stdlib'
-        exclude module: 'kotlin-stdlib-common'
+    modules.forEach { module ->
+        implementation project(":$module")
     }
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

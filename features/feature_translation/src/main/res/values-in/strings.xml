@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text for setup configuration region -->
+    <string name="configuration_setup_failed">Konfigurasi gagal. Silahkan coba lagi.</string>
+
+    <!-- Text for shown progress dialog -->
+    <string name="progress_dialog_configuring_description">Mengkonfigurasi&#8230; Koneksi internet diperlukan.</string>
+
+    <!-- Text for shown permission dialog -->
+    <string name="permission_dialog_description"><![CDATA[<b>%1$s</b> memerlukan izin agar selalu tertampil di atas aplikasi lain.]]></string>
+    <string name="permission_dialog_action_negative_text">Tolak</string>
+    <string name="permission_dialog_action_positive_text">Izinkan</string>
+
+    <!-- Text for preference region -->
+    <string name="preference_responsive_translator_label">Penerjemah Responsif</string>
+    <string name="preference_responsive_translator_description">Mulai menerjemahkan sesaat berhenti mengetik</string>
+    <string name="preference_auto_editing_mode_label">Auto Mode Sunting</string>
+    <string name="preference_auto_editing_mode_description">Memasuki mode sunting sesaat menampilkan layanan</string>
+    <string name="preference_clear_history_label">Hapus Riwayat</string>
+    <string name="preference_clear_history_description">Hapus riwayat terjemahan sesaat menyembunyikan layanan</string>
+    <string name="preference_dim_background_label">Latar Redup</string>
+    <string name="preference_dim_background_description">Latar dengan status redup ketika memasuki mode sunting</string>
+
+    <!-- Text for floating service -->
+    <string name="translate">Terjemahkan</string>
+    <string name="dots">&#8230;</string>
+    <string name="close_service">Tutup layanan</string>
+    <string name="swap_content_description">Tukar bahasa</string>
+    <string name="clear_content_description">Hapus teks</string>
+    <string name="toggle_content_description">Tampil atau sembunyikan layanan penerjemah</string>
+</resources>

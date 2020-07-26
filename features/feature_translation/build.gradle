@@ -1,0 +1,65 @@
+apply from: "$rootDir/libs/lib.gradle"
+
+def plugins = [
+    "kotlin-kapt",
+    "dagger.hilt.android.plugin"
+]
+
+plugins.forEach { plugin ->
+    apply plugin: plugin
+}
+
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
+            }
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+def deps = [
+    "appcompat",
+    "assistedinject",
+    "cardview",
+    "constraintlayout",
+    "firebase",
+    "fragment",
+    "hilt",
+    "lifecycle"
+]
+
+deps.forEach { dep ->
+    apply from: "$rootDir/deps/${dep}.gradle"
+}
+
+def modules = [
+    "lib_api_translation",
+    "lib_arch",
+    "lib_data",
+    "lib_logger",
+    "lib_message",
+    "lib_network",
+    "lib_preference",
+    "lib_resource",
+    "lib_security",
+    "lib_storage",
+    "lib_threading",
+    "lib_tracker",
+    "lib_ui"
+]
+
+dependencies {
+    modules.forEach { module ->
+        implementation project(":$module")
+    }
+}

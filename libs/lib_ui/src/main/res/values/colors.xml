@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cerise">#4589DC</color>
+
+    <color name="dark">#000000</color>
+
+    <color name="grayDark">#81868F</color>
+    <color name="gray">#A1A9B3</color>
+    <color name="grayLight">#CED2D9</color>
+    <color name="grayLighter">#F1F2F5</color>
+
+    <color name="white">#FFFFFF</color>
+</resources>

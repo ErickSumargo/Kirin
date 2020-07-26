@@ -1,0 +1,4 @@
+dependencies {
+    implementation "com.squareup.inject:assisted-inject-annotations-dagger2:$deps.assistedinject"
+    kapt "com.squareup.inject:assisted-inject-processor-dagger2:$deps.assistedinject"
+}

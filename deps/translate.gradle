@@ -1,0 +1,7 @@
+dependencies {
+    implementation("com.google.cloud:google-cloud-translate:$deps.translate") {
+        exclude group: 'org.apache.httpcomponents'
+        exclude group: 'org.json', module: 'json'
+        exclude group: 'com.google.auto.value', module: 'auto-value'
+    }
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text for setup configuration region -->
+    <string name="configuration_setup_failed">Failed in configuring. Please retry.</string>
+
+    <!-- Text for shown progress dialog -->
+    <string name="progress_dialog_configuring_description">Configuring&#8230; Requiring internet connection.</string>
+
+    <!-- Text for shown permission dialog -->
+    <string name="permission_dialog_description"><![CDATA[<b>%1$s</b> requires permission to draw overlay window.]]></string>
+    <string name="permission_dialog_action_negative_text">Deny</string>
+    <string name="permission_dialog_action_positive_text">Allow</string>
+
+    <!-- Text for preference region -->
+    <string name="preference_responsive_translator_label">Responsive Translator</string>
+    <string name="preference_responsive_translator_description">Start translating as soon stop typing</string>
+    <string name="preference_auto_editing_mode_label">Auto Editing Mode</string>
+    <string name="preference_auto_editing_mode_description">Enter editing mode as soon showing service</string>
+    <string name="preference_clear_history_label">Clear History</string>
+    <string name="preference_clear_history_description">Clear translation history after hiding service</string>
+    <string name="preference_dim_background_label">Dim Background</string>
+    <string name="preference_dim_background_description">Show dim background in editing mode</string>
+
+    <!-- Text for floating service -->
+    <string name="translate">Translate</string>
+    <string name="dots">&#8230;</string>
+    <string name="close_service">Close service</string>
+    <string name="swap_content_description">Swap languages</string>
+    <string name="clear_content_description">Clear source text</string>
+    <string name="toggle_content_description">Show or hide floating translation service</string>
+</resources>
