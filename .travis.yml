@@ -14,4 +14,4 @@ before_install:
   - yes | sdkmanager "build-tools;29.0.3"
 
 script:
-  - ./gradlew clean build -Pbuild=debug
+  - ./gradlew clean build -Pbuild=dev

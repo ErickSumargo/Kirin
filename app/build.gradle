@@ -32,7 +32,17 @@ android {
 
             manifestPlaceholders = [
                 analyticsEnabled    : "false",
-                crashlyticsEnabled  : "false",
+                crashlyticsEnabled  : "false"
+            ]
+        }
+
+        dev {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [
+                analyticsEnabled    : "false",
+                crashlyticsEnabled  : "false"
             ]
         }
 
@@ -43,7 +53,7 @@ android {
 
             manifestPlaceholders = [
                 analyticsEnabled    : "true",
-                crashlyticsEnabled  : "true",
+                crashlyticsEnabled  : "true"
             ]
         }
     }
