@@ -1,6 +1,7 @@
 *.iml
 .gradle/
 .idea/
+app/google-services.json
 build/
 captures/
 local.properties
@@ -10,4 +11,3 @@ local.properties
 *.apk
 *.aab
 *.iml
-*.json
