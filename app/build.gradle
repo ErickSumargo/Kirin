@@ -50,8 +50,18 @@ android {
 
     flavorDimensions "mode"
     productFlavors {
-        dev {
+        ci {
             dimension "mode"
+        }
+
+        production {
+            dimension "mode"
+        }
+    }
+
+    variantFilter { variant ->
+        if (variant.getFlavors().get(0).name == 'ci') {
+            variant.setIgnore(true)
         }
     }
 
