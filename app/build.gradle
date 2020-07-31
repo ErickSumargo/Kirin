@@ -36,16 +36,6 @@ android {
             ]
         }
 
-        dev {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            manifestPlaceholders = [
-                analyticsEnabled    : "false",
-                crashlyticsEnabled  : "false"
-            ]
-        }
-
         release {
             minifyEnabled true
             shrinkResources true
@@ -55,6 +45,13 @@ android {
                 analyticsEnabled    : "true",
                 crashlyticsEnabled  : "true"
             ]
+        }
+    }
+
+    flavorDimensions "mode"
+    productFlavors {
+        dev {
+            dimension "mode"
         }
     }
 
