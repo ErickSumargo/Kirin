@@ -32,7 +32,7 @@ android {
 
             manifestPlaceholders = [
                 analyticsEnabled    : "false",
-                crashlyticsEnabled  : "false",
+                crashlyticsEnabled  : "false"
             ]
         }
 
@@ -43,8 +43,15 @@ android {
 
             manifestPlaceholders = [
                 analyticsEnabled    : "true",
-                crashlyticsEnabled  : "true",
+                crashlyticsEnabled  : "true"
             ]
+        }
+    }
+
+    flavorDimensions "mode"
+    productFlavors {
+        ci {
+            dimension "mode"
         }
     }
 
