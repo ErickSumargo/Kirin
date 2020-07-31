@@ -5,8 +5,6 @@ import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
-import android.os.Build.VERSION_CODES.O
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat.Builder
 import androidx.core.app.NotificationCompat.DecoratedCustomViewStyle
 import androidx.core.app.NotificationManagerCompat
@@ -21,7 +19,6 @@ import javax.inject.Inject
  * Created by ErickSumargo on 01/06/20.
  */
 
-@RequiresApi(O)
 class NotificationFactory @Inject constructor(
     @ApplicationContext private val context: Context,
     private val appInfo: AppInfo
