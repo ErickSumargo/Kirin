@@ -13,6 +13,7 @@ android:
 
 script:
   - ./gradlew assembleProductionDebug
+  - ./gradlew testProductionDebugUnitTest
   - ./gradlew createProductionDebugCoverageReport
 
 

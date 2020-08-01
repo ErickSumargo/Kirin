@@ -5,7 +5,8 @@ def plugins = [
     "kotlin-android",
     "kotlin-android-extensions",
     "kotlin-kapt",
-    "dagger.hilt.android.plugin"
+    "dagger.hilt.android.plugin",
+    "com.hiya.jacoco-android"
 ]
 
 plugins.forEach { plugin ->
