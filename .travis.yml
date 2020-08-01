@@ -14,7 +14,8 @@ android:
 script:
   - ./gradlew assembleProductionDebug
   - ./gradlew testProductionDebugUnitTest
-  - ./gradlew createProductionDebugCoverageReport
+  - ./gradlew jacocoTestProductionDebugUnitTestReport
+  - ./gradlew connectedCheck
 
 
 before_install:
