@@ -1,5 +1,6 @@
 language: android
-dist: trusty
+jdk: oraclejdk8
+
 android:
   components:
     - tools
@@ -9,9 +10,14 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
 
+script:
+  - ./gradlew assembleProductionDebug
+  - ./gradlew testProductionDebugUnitTest
+  - ./gradlew createProductionDebugCoverageReport
+
 before_install:
   - yes | sdkmanager "platforms;android-29"
   - yes | sdkmanager "build-tools;29.0.3"
 
-script:
-  - ./gradlew clean build -Pbuild=ciDebug
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

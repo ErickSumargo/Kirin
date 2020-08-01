@@ -19,6 +19,11 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        tasks.lint.enabled = false
+    }
+
+    packagingOptions {
+        exclude 'project.properties'
+        exclude 'META-INF/INDEX.LIST'
     }
 }

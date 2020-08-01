@@ -28,6 +28,7 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             manifestPlaceholders = [
@@ -50,9 +51,13 @@ android {
 
     flavorDimensions "mode"
     productFlavors {
-        ci {
+        production {
             dimension "mode"
         }
+    }
+
+    lintOptions {
+        tasks.lint.enabled = false
     }
 
     packagingOptions {
