@@ -12,9 +12,9 @@ android:
     - extra-android-m2repository
 
 script:
-  - ./gradlew build jacocoTestReport assembleAndroidTest
-  - ./gradlew connectedCheck
-  - ./gradlew clean build -Pbuild=ciDebug
+  - ./gradlew assembleProductionDebug
+  - ./gradlew createProductionDebugCoverageReport
+
 
 before_install:
   - yes | sdkmanager "platforms;android-29"

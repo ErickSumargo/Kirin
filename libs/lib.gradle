@@ -19,7 +19,7 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        tasks.lint.enabled = false
     }
 
     packagingOptions {

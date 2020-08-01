@@ -5,8 +5,7 @@ def plugins = [
     "kotlin-android",
     "kotlin-android-extensions",
     "kotlin-kapt",
-    "dagger.hilt.android.plugin",
-    "com.hiya.jacoco-android"
+    "dagger.hilt.android.plugin"
 ]
 
 plugins.forEach { plugin ->
@@ -52,9 +51,13 @@ android {
 
     flavorDimensions "mode"
     productFlavors {
-        ci {
+        production {
             dimension "mode"
         }
+    }
+
+    lintOptions {
+        tasks.lint.enabled = false
     }
 
     packagingOptions {
