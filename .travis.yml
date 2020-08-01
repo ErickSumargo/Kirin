@@ -14,9 +14,7 @@ android:
 script:
   - ./gradlew assembleProductionDebug
   - ./gradlew testProductionDebugUnitTest
-  - ./gradlew jacocoTestProductionDebugUnitTestReport
-  - ./gradlew connectedCheck
-
+  - ./gradlew createProductionDebugCoverageReport
 
 before_install:
   - yes | sdkmanager "platforms;android-29"
