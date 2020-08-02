@@ -18,6 +18,12 @@ android {
         consumerProguardFiles 'proguard-rules.pro'
     }
 
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
     lintOptions {
         tasks.lint.enabled = false
     }

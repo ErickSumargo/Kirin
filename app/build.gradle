@@ -49,13 +49,6 @@ android {
         }
     }
 
-    flavorDimensions "mode"
-    productFlavors {
-        production {
-            dimension "mode"
-        }
-    }
-
     lintOptions {
         tasks.lint.enabled = false
     }
