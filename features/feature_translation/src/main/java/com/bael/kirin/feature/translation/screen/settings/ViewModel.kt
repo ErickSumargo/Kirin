@@ -1,6 +1,5 @@
 package com.bael.kirin.feature.translation.screen.settings
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.bael.kirin.feature.translation.configurator.SetupConfigurator
@@ -13,6 +12,7 @@ import com.bael.kirin.feature.translation.screen.settings.Intent.DenyPermissionD
 import com.bael.kirin.lib.arch.base.BaseViewModel
 import com.bael.kirin.lib.threading.util.Util.IOThread
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import androidx.hilt.Assisted as HiltAssisted
 
 /**
  * Created by ErickSumargo on 01/06/20.
@@ -20,11 +20,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 class ViewModel @ViewModelInject constructor(
-    @Assisted savedState: SavedStateHandle,
     initState: State,
     initIntent: Intent?,
+    @HiltAssisted savedStateHandle: SavedStateHandle,
     private val configurator: SetupConfigurator
-) : BaseViewModel<State, Intent>(initState, initIntent, savedState) {
+) : BaseViewModel<State, Intent>(initState, initIntent, savedStateHandle) {
 
     fun setup() = execute(thread = IOThread) {
         configurator.setup { config ->

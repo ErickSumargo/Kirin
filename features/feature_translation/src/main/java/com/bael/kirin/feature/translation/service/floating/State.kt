@@ -1,6 +1,7 @@
 package com.bael.kirin.feature.translation.service.floating
 
 import com.bael.kirin.lib.api.translation.model.entity.Translation
+import com.bael.kirin.lib.arch.base.BaseState
 import com.bael.kirin.lib.data.model.Data
 
 /**
@@ -15,4 +16,4 @@ data class State(
     val query: String = "",
     val queryFixed: String = "",
     val translationData: Data<Translation> = Data()
-)
+) : BaseState()

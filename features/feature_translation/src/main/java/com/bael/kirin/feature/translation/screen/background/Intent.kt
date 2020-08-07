@@ -1,10 +1,12 @@
 package com.bael.kirin.feature.translation.screen.background
 
+import com.bael.kirin.lib.arch.base.BaseIntent
+
 /**
  * Created by ErickSumargo on 01/06/20.
  */
 
-sealed class Intent {
+sealed class Intent : BaseIntent() {
 
     object Initialize : Intent()
 

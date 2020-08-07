@@ -26,14 +26,20 @@ import kotlin.coroutines.CoroutineContext
 abstract class BaseViewModel<S, I>(
     initState: S,
     initIntent: I?,
-    savedStateHandle: SavedStateHandle? = null,
+    private val savedStateHandle: SavedStateHandle? = null,
     override val coroutineContext: CoroutineContext = DefaultThread
 ) : ViewModel(),
     Threading {
     @Inject
     protected lateinit var logger: Logger
 
-    private val mutableStateFlow: MutableStateFlow<S> = MutableStateFlow(initState)
+    private val restoredState: S = savedStateHandle?.get(KEY_SAVED_STATE) ?: initState
+    private val mutableStateFlow: MutableStateFlow<S> = MutableStateFlow(restoredState)
+
+    /**
+     * We don't want to replay the previous occurred intent.
+     * It should observe for the incoming new intent instead.
+     */
     private val mutableIntentFlow: MutableStateFlow<I?> = MutableStateFlow(initIntent)
 
     private val mutableStateData: MutableLiveData<Pair<S?, S>> = MutableLiveData()
@@ -45,13 +51,22 @@ abstract class BaseViewModel<S, I>(
     protected val state: S get() = states.value?.second!!
 
     init {
+        observeState()
+        observeIntent()
+    }
+
+    private fun observeState() {
         execute(MainThread) {
             mutableStateFlow.scan(null as S?) { previousState, newState ->
                 mutableStateData.value = previousState to newState
+                savedStateHandle?.set(KEY_SAVED_STATE, newState)
+
                 newState
             }.collect()
         }
+    }
 
+    private fun observeIntent() {
         execute(MainThread) {
             mutableIntentFlow.collect { intent ->
                 mutableIntentData.value = intent
@@ -81,8 +96,7 @@ abstract class BaseViewModel<S, I>(
         mutableIntentFlow.value = newIntent
     }
 
-    protected fun renderWithAction(newState: S, newIntent: I) {
-        mutableStateFlow.value = newState
-        mutableIntentFlow.value = newIntent
+    companion object {
+        const val KEY_SAVED_STATE: String = "saved_state"
     }
 }
