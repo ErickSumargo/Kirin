@@ -1,10 +1,10 @@
 package com.bael.kirin.feature.translation.screen.background
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.bael.kirin.lib.arch.base.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import androidx.hilt.Assisted as HiltAssisted
 
 /**
  * Created by ErickSumargo on 01/06/20.
@@ -12,7 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 class ViewModel @ViewModelInject constructor(
-    @Assisted savedState: SavedStateHandle,
     initState: State,
-    initIntent: Intent?
-) : BaseViewModel<State, Intent>(initState, initIntent, savedState)
+    initIntent: Intent?,
+    @HiltAssisted savedStateHandle: SavedStateHandle
+) : BaseViewModel<State, Intent>(initState, initIntent, savedStateHandle)

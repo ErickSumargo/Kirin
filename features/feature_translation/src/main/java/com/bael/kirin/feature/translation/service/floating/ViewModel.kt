@@ -46,7 +46,8 @@ class ViewModel @Inject constructor(
         }
         val newIntent = ActivateToggle(editMode).takeIf { active } ?: DeactivateToggle
 
-        renderWithAction(newState, newIntent)
+        render(newState)
+        action(newIntent)
     }
 
     fun setSourceLanguage(language: String) = execute {
