@@ -223,9 +223,9 @@ class UI :
     }
 
     companion object {
-        const val RC_OVERLAY_PERMISSION: Int = 100
+        private const val RC_OVERLAY_PERMISSION: Int = 100
 
-        const val TAG_PROGRESS_DIALOG: String = "progress_dialog"
-        const val TAG_PERMISSION_DIALOG: String = "permission_dialog"
+        private const val TAG_PROGRESS_DIALOG: String = "progress_dialog"
+        private const val TAG_PERMISSION_DIALOG: String = "permission_dialog"
     }
 }

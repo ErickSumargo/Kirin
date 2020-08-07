@@ -37,7 +37,7 @@ abstract class BaseViewModel<S, I>(
     private val mutableStateFlow: MutableStateFlow<S> = MutableStateFlow(restoredState)
 
     /**
-     * We don't want to replay the previous occurred intent.
+     * Here we don't want to replay the previous occurred intent.
      * It should observe for the incoming new intent instead.
      */
     private val mutableIntentFlow: MutableStateFlow<I?> = MutableStateFlow(initIntent)
@@ -74,7 +74,7 @@ abstract class BaseViewModel<S, I>(
         }
     }
 
-    final override fun execute(
+    override fun execute(
         thread: CoroutineContext,
         block: suspend CoroutineScope.() -> Unit
     ) {
@@ -97,6 +97,6 @@ abstract class BaseViewModel<S, I>(
     }
 
     companion object {
-        const val KEY_SAVED_STATE: String = "saved_state"
+        private const val KEY_SAVED_STATE: String = "saved_state"
     }
 }

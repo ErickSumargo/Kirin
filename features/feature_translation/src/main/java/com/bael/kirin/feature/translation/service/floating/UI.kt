@@ -468,7 +468,7 @@ class UI :
     }
 
     companion object {
-        const val MAX_FLOATING_DIFF_DISTANCE: Int = 16
+        private const val MAX_FLOATING_DIFF_DISTANCE: Int = 16
 
         val toggleLayoutParams: LayoutParams =
             if (minOreoSdk) {

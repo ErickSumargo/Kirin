@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.bael.kirin.lib.logger.contract.Logger
 import javax.inject.Inject
@@ -62,12 +63,12 @@ class PermissionDialog : DialogFragment() {
             actionNegativeText: String,
             actionPositiveText: String
         ): PermissionDialog {
-            val data = Bundle().apply {
-                putString(ARG_TITLE, title)
-                putCharSequence(ARG_MESSAGE, message)
-                putString(ARG_ACTION_NEGATIVE_TEXT, actionNegativeText)
-                putString(ARG_ACTION_POSITIVE_TEXT, actionPositiveText)
-            }
+            val data = bundleOf(
+                ARG_TITLE to title,
+                ARG_MESSAGE to message,
+                ARG_ACTION_NEGATIVE_TEXT to actionNegativeText,
+                ARG_ACTION_POSITIVE_TEXT to actionPositiveText
+            )
 
             val dialog = PermissionDialog().apply {
                 arguments = data
