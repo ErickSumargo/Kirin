@@ -50,13 +50,13 @@ class Preference @Inject constructor(preference: Preference) : Preference by pre
     }
 
     companion object {
-        const val PREFERENCE_CONFIG_SETUP_COMPLETED: String = "config_setup_completed"
-        const val PREFERENCE_SOURCE_LANGUAGE: String = "source_language"
-        const val PREFERENCE_TARGET_LANGUAGE: String = "target_language"
-        const val PREFERENCE_GOOGLE_TRANSLATE_URL: String = "google_translate_url"
-        const val PREFERENCE_RESPONSIVE_TRANSLATOR: String = "responsive_translator"
-        const val PREFERENCE_AUTO_EDITING_MODE: String = "auto_editing_mode"
-        const val PREFERENCE_AUTO_CLEAR_HISTORY: String = "auto_clear_history"
-        const val PREFERENCE_DIM_BACKGROUND: String = "dim_background"
+        private const val PREFERENCE_CONFIG_SETUP_COMPLETED: String = "config_setup_completed"
+        private const val PREFERENCE_SOURCE_LANGUAGE: String = "source_language"
+        private const val PREFERENCE_TARGET_LANGUAGE: String = "target_language"
+        private const val PREFERENCE_GOOGLE_TRANSLATE_URL: String = "google_translate_url"
+        private const val PREFERENCE_RESPONSIVE_TRANSLATOR: String = "responsive_translator"
+        private const val PREFERENCE_AUTO_EDITING_MODE: String = "auto_editing_mode"
+        private const val PREFERENCE_AUTO_CLEAR_HISTORY: String = "auto_clear_history"
+        private const val PREFERENCE_DIM_BACKGROUND: String = "dim_background"
     }
 }

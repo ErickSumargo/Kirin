@@ -97,6 +97,6 @@ abstract class BaseViewModel<S, I>(
     }
 
     companion object {
-        const val KEY_SAVED_STATE: String = "saved_state"
+        private const val KEY_SAVED_STATE: String = "saved_state"
     }
 }

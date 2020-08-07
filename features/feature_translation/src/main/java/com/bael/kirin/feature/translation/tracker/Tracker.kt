@@ -91,16 +91,16 @@ class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
     }
 
     companion object {
-        const val TRACK_TOGGLE_SERVICE: String = "toggle_service"
-        const val TRACK_PREFERENCE_UPDATE: String = "preference_update"
-        const val TRACK_TOGGLE_ACTIVATION: String = "toggle_activation"
-        const val TRACK_SWAP_LANGUAGE: String = "swap_language"
-        const val TRACK_CLEAR_QUERY: String = "clear_query"
-        const val TRACK_TRANSLATION: String = "translation"
-        const val TRACK_STOP_EDITING: String = "stop_editing"
-        const val TRACK_DISPLAY_RESULT_DETAIL: String = "display_result_detail"
-        const val TRACK_INSTANT_TRANSLATE: String = "instant_translate"
-        const val TRACK_DEFERRED_INSTANT_TRANSLATE: String = "deferred_instant_translate"
-        const val TRACK_SHOW_CONTEXT_MENU: String = "show_context_menu"
+        private const val TRACK_TOGGLE_SERVICE: String = "toggle_service"
+        private const val TRACK_PREFERENCE_UPDATE: String = "preference_update"
+        private const val TRACK_TOGGLE_ACTIVATION: String = "toggle_activation"
+        private const val TRACK_SWAP_LANGUAGE: String = "swap_language"
+        private const val TRACK_CLEAR_QUERY: String = "clear_query"
+        private const val TRACK_TRANSLATION: String = "translation"
+        private const val TRACK_STOP_EDITING: String = "stop_editing"
+        private const val TRACK_DISPLAY_RESULT_DETAIL: String = "display_result_detail"
+        private const val TRACK_INSTANT_TRANSLATE: String = "instant_translate"
+        private const val TRACK_DEFERRED_INSTANT_TRANSLATE: String = "deferred_instant_translate"
+        private const val TRACK_SHOW_CONTEXT_MENU: String = "show_context_menu"
     }
 }
