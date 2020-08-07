@@ -12,12 +12,7 @@ import javax.inject.Inject
  * Created by ErickSumargo on 01/06/20.
  */
 
-class PermissionDialog(
-    private val title: String,
-    private val message: CharSequence,
-    private val actionNegativeText: String,
-    private val actionPositiveText: String
-) : DialogFragment() {
+class PermissionDialog : DialogFragment() {
     @Inject
     lateinit var logger: Logger
 
@@ -34,6 +29,11 @@ class PermissionDialog(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return try {
+            val title = arguments?.getCharSequence(ARG_TITLE)
+            val message = arguments?.getCharSequence(ARG_MESSAGE)
+            val actionNegativeText = arguments?.getCharSequence(ARG_ACTION_NEGATIVE_TEXT)
+            val actionPositiveText = arguments?.getCharSequence(ARG_ACTION_POSITIVE_TEXT)
+
             AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setMessage(message)
@@ -47,6 +47,33 @@ class PermissionDialog(
         } catch (cause: Exception) {
             logger.log(cause)
             Dialog(context!!)
+        }
+    }
+
+    companion object {
+        private const val ARG_TITLE: String = "title"
+        private const val ARG_MESSAGE: String = "message"
+        private const val ARG_ACTION_NEGATIVE_TEXT: String = "action_negative_text"
+        private const val ARG_ACTION_POSITIVE_TEXT: String = "action_positive_text"
+
+        fun create(
+            title: String,
+            message: CharSequence,
+            actionNegativeText: String,
+            actionPositiveText: String
+        ): PermissionDialog {
+            val data = Bundle().apply {
+                putString(ARG_TITLE, title)
+                putCharSequence(ARG_MESSAGE, message)
+                putString(ARG_ACTION_NEGATIVE_TEXT, actionNegativeText)
+                putString(ARG_ACTION_POSITIVE_TEXT, actionPositiveText)
+            }
+
+            val dialog = PermissionDialog().apply {
+                arguments = data
+                isCancelable = false
+            }
+            return dialog
         }
     }
 }

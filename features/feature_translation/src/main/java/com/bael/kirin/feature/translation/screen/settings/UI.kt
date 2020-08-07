@@ -111,10 +111,9 @@ class UI :
     }
 
     override fun showSetupProgress() {
-        progressDialog = ProgressDialog(
+        ProgressDialog.create(
             message = textOf(R.string.progress_dialog_configuring_description)
         ).also { dialog ->
-            dialog.isCancelable = false
             dialog.show(supportFragmentManager, TAG_PROGRESS_DIALOG)
         }
     }
@@ -147,13 +146,12 @@ class UI :
     }
 
     private fun requestPermissionDialogDrawOverlays() {
-        PermissionDialog(
+        PermissionDialog.create(
             title = "",
             message = textHtmlOf(R.string.permission_dialog_description, appInfo.name),
             actionNegativeText = textOf(R.string.permission_dialog_action_negative_text),
             actionPositiveText = textOf(R.string.permission_dialog_action_positive_text)
         ).also { dialog ->
-            dialog.isCancelable = false
             dialog.show(supportFragmentManager, TAG_PERMISSION_DIALOG)
         }
     }
