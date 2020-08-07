@@ -3,6 +3,7 @@ package com.bael.kirin.lib.ui.dialog.progress
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.ui.databinding.ProgressDialogLayoutBinding
@@ -41,9 +42,9 @@ class ProgressDialog : DialogFragment() {
         fun create(
             message: CharSequence
         ): PermissionDialog {
-            val data = Bundle().apply {
-                putCharSequence(ARG_MESSAGE, message)
-            }
+            val data = bundleOf(
+                ARG_MESSAGE to message
+            )
 
             val dialog = PermissionDialog().apply {
                 arguments = data

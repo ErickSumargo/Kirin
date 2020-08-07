@@ -17,7 +17,8 @@ android {
 
 def deps = [
     "appcompat",
-    "hilt"
+    "hilt",
+    "ktx"
 ]
 
 deps.forEach { dep ->
