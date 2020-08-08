@@ -111,7 +111,7 @@ class UI :
     }
 
     override fun showSetupProgress() {
-        ProgressDialog.create(
+        progressDialog = ProgressDialog.create(
             message = textOf(R.string.progress_dialog_configuring_description)
         ).also { dialog ->
             dialog.show(supportFragmentManager, TAG_PROGRESS_DIALOG)

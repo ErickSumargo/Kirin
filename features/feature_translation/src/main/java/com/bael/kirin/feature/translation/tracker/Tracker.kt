@@ -1,5 +1,6 @@
 package com.bael.kirin.feature.translation.tracker
 
+import androidx.core.os.bundleOf
 import com.bael.kirin.lib.tracker.contract.Tracker
 import javax.inject.Inject
 
@@ -10,21 +11,37 @@ import javax.inject.Inject
 class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
 
     fun trackToggleService(active: Boolean) {
-        trackIncrement(event = "$TRACK_TOGGLE_SERVICE/$active")
+        track(
+            event = TRACK_TOGGLE_SERVICE,
+            data = bundleOf(
+                "active" to active
+            )
+        )
     }
 
     fun trackPreferenceUpdate(key: String, active: Boolean) {
-        trackIncrement(event = "$TRACK_PREFERENCE_UPDATE/$key/$active")
+        track(
+            event = TRACK_PREFERENCE_UPDATE,
+            data = bundleOf(
+                "key" to key,
+                "active" to active
+            )
+        )
     }
 
     fun trackToggleActivation(active: Boolean) {
-        trackIncrement(event = "$TRACK_TOGGLE_ACTIVATION/$active")
+        track(
+            event = TRACK_TOGGLE_ACTIVATION,
+            data = bundleOf(
+                "active" to active
+            )
+        )
     }
 
     fun trackSwapLanguage(sourceLanguage: String, targetLanguage: String) {
         track(
             event = TRACK_SWAP_LANGUAGE,
-            value = mapOf(
+            data = bundleOf(
                 "sl" to sourceLanguage,
                 "tl" to targetLanguage
             )
@@ -32,7 +49,7 @@ class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
     }
 
     fun trackClearQuery() {
-        trackIncrement(event = TRACK_CLEAR_QUERY)
+        track(event = TRACK_CLEAR_QUERY)
     }
 
     fun trackTranslationData(
@@ -42,7 +59,7 @@ class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
     ) {
         track(
             event = TRACK_TRANSLATION,
-            value = mapOf(
+            data = bundleOf(
                 "sl" to sourceLanguage,
                 "tl" to targetLanguage,
                 "query" to query
@@ -50,12 +67,13 @@ class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
         )
     }
 
-    fun trackStopEditingByBackPressed() {
-        trackIncrement(event = "$TRACK_STOP_EDITING/back_pressed")
-    }
-
-    fun trackStopEditingByKeyboard() {
-        trackIncrement(event = "$TRACK_STOP_EDITING/keyboard")
+    fun trackStopEditing(by: String = "") {
+        track(
+            event = TRACK_STOP_EDITING,
+            data = bundleOf(
+                "by" to by
+            )
+        )
     }
 
     fun trackDisplayResultDetail(
@@ -66,7 +84,7 @@ class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
     ) {
         track(
             event = TRACK_DISPLAY_RESULT_DETAIL,
-            value = mapOf(
+            data = bundleOf(
                 "sl" to sourceLanguage,
                 "tl" to targetLanguage,
                 "query" to query,
@@ -78,16 +96,18 @@ class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
     fun trackInstantTranslate(query: String) {
         track(
             event = TRACK_INSTANT_TRANSLATE,
-            value = mapOf("query" to query)
+            data = bundleOf(
+                "query" to query
+            )
         )
     }
 
     fun trackDeferredInstantTranslate() {
-        trackIncrement(event = TRACK_DEFERRED_INSTANT_TRANSLATE)
+        track(event = TRACK_DEFERRED_INSTANT_TRANSLATE)
     }
 
     fun trackShowContextMenu() {
-        trackIncrement(event = TRACK_SHOW_CONTEXT_MENU)
+        track(event = TRACK_SHOW_CONTEXT_MENU)
     }
 
     companion object {

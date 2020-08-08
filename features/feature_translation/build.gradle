@@ -35,6 +35,7 @@ def deps = [
     "firebase",
     "fragment",
     "hilt",
+    "ktx",
     "lifecycle"
 ]
 
