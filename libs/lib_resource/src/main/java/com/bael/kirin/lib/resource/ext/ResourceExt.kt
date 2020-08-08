@@ -12,12 +12,18 @@ import com.bael.kirin.lib.resource.util.Util.minNougatSdk
  * Created by ErickSumargo on 01/06/20.
  */
 
-fun Context.textOf(resId: Int, vararg params: String): String {
+fun Context.textOf(
+    resId: Int,
+    vararg params: String
+): String {
     return getString(resId, *params)
 }
 
 @SuppressLint("InlinedApi")
-fun Context.textHtmlOf(resId: Int, vararg params: String): CharSequence {
+fun Context.textHtmlOf(
+    resId: Int,
+    vararg params: String
+): CharSequence {
     val text = getString(resId, *params)
     return if (minNougatSdk) {
         fromHtml(text, FROM_HTML_MODE_LEGACY)

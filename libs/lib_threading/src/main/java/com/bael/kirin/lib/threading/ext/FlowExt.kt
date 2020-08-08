@@ -10,6 +10,4 @@ import kotlin.coroutines.CoroutineContext
  * Created by ErickSumargo on 15/06/20.
  */
 
-suspend fun <T> Flow<T>.subscribe(
-    thread: CoroutineContext = IO
-) = flowOn(thread).collect()
+suspend fun <T> Flow<T>.subscribe(thread: CoroutineContext = IO) = flowOn(thread).collect()

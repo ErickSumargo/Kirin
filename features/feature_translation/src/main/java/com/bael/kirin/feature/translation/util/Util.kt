@@ -14,7 +14,10 @@ object Util {
     internal val Context.canDrawOverlays: Boolean
         get() = minMarshmallowSdk && canDrawOverlays(this)
 
-    fun calculateDistance(coordsStart: Pair<Int, Int>, coordsEnd: Pair<Int, Int>): Double {
+    fun calculateDistance(
+        coordsStart: Pair<Int, Int>,
+        coordsEnd: Pair<Int, Int>
+    ): Double {
         val (xStart, yStart) = coordsStart
         val (xEnd, yEnd) = coordsEnd
 

@@ -38,9 +38,7 @@ class ProgressDialog : DialogFragment() {
     companion object {
         private const val ARG_MESSAGE: String = "message"
 
-        fun create(
-            message: CharSequence
-        ): ProgressDialog {
+        fun create(message: CharSequence): ProgressDialog {
             val data = bundleOf(
                 ARG_MESSAGE to message
             )

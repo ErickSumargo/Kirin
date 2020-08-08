@@ -24,7 +24,10 @@ class LayoutManager @Inject constructor(
         context.getSystemService(WINDOW_SERVICE) as WindowManager
     }
 
-    fun addLayout(view: View, layoutParams: LayoutParams) {
+    fun addLayout(
+        view: View,
+        layoutParams: LayoutParams
+    ) {
         try {
             if (view.parent != null) return
             windowManager.addView(view, layoutParams)
@@ -33,7 +36,10 @@ class LayoutManager @Inject constructor(
         }
     }
 
-    fun updateLayout(view: View, layoutParams: LayoutParams) {
+    fun updateLayout(
+        view: View,
+        layoutParams: LayoutParams
+    ) {
         try {
             if (view.parent == null) return
             windowManager.updateViewLayout(view, layoutParams)
