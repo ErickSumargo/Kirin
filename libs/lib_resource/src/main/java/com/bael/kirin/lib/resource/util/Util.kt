@@ -12,8 +12,10 @@ import android.os.Build.VERSION_CODES.O
 object Util {
     val minMarshmallowSdk: Boolean
         get() = SDK_INT >= M
+
     val minNougatSdk: Boolean
         get() = SDK_INT >= N
+
     val minOreoSdk: Boolean
         get() = SDK_INT >= O
 }

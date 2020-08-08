@@ -26,7 +26,10 @@ class DefaultSecurity @Inject constructor(
     Editor,
     Logger by logger {
 
-    override fun encrypt(plainData: String, key: String): String? {
+    override fun encrypt(
+        plainData: String,
+        key: String
+    ): String? {
         return try {
             val secretKey = generateSecretKey(key)
             cipher.init(ENCRYPT_MODE, secretKey)
@@ -42,7 +45,10 @@ class DefaultSecurity @Inject constructor(
         }
     }
 
-    override fun decrypt(cipherData: String, key: String): String? {
+    override fun decrypt(
+        cipherData: String,
+        key: String
+    ): String? {
         return try {
             val secretKey = generateSecretKey(key)
             cipher.init(DECRYPT_MODE, secretKey)
