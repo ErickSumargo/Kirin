@@ -1,7 +1,7 @@
-package com.bael.kirin.lib.tracker.di.module
+package com.bael.kirin.lib.analytics.di.module
 
-import com.bael.kirin.lib.tracker.contract.Tracker
-import com.bael.kirin.lib.tracker.implementation.FirebaseTracker
+import com.bael.kirin.lib.analytics.contract.Tracker
+import com.bael.kirin.lib.analytics.implementation.FirebaseAnalytics
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,9 +14,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-abstract class TrackerModule {
+abstract class AnalyticsModule {
 
     @Singleton
     @Binds
-    abstract fun bindTracker(database: FirebaseTracker): Tracker
+    abstract fun bindTracker(analytics: FirebaseAnalytics): Tracker
 }
