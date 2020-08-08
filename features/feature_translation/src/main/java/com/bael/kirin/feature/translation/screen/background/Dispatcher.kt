@@ -9,9 +9,9 @@ import com.bael.kirin.feature.translation.screen.background.Intent.StartService
 import com.bael.kirin.feature.translation.signal.Signal
 import com.bael.kirin.feature.translation.signal.Signal.DismissBackground
 import com.bael.kirin.feature.translation.signal.SignalManager
-import com.bael.kirin.lib.arch.base.BaseDispatcher
-import com.bael.kirin.lib.arch.base.contract.DispatcherFactoryAssisted
-import com.bael.kirin.lib.arch.signal.SignalReceiver
+import com.bael.kirin.lib.base.di.assisted.DispatcherFactoryAssisted
+import com.bael.kirin.lib.base.dispatcher.BaseDispatcher
+import com.bael.kirin.lib.base.signal.SignalReceiver
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dagger.hilt.android.qualifiers.ActivityContext

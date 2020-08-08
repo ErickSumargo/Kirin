@@ -13,8 +13,8 @@ import com.bael.kirin.feature.translation.signal.Signal.BackgroundShown
 import com.bael.kirin.feature.translation.signal.Signal.DismissBackground
 import com.bael.kirin.feature.translation.signal.Signal.InstantTranslate
 import com.bael.kirin.feature.translation.signal.Signal.StopService
-import com.bael.kirin.lib.arch.base.BaseSignalManager
-import com.bael.kirin.lib.arch.signal.SignalReceiver
+import com.bael.kirin.lib.base.signal.BaseSignalManager
+import com.bael.kirin.lib.base.signal.SignalReceiver
 
 /**
  * Created by ErickSumargo on 01/06/20.

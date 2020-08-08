@@ -2,7 +2,7 @@ package com.bael.kirin.feature.translation.screen.background
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
-import com.bael.kirin.lib.arch.base.BaseViewModel
+import com.bael.kirin.lib.base.viewmodel.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.hilt.Assisted as HiltAssisted
 

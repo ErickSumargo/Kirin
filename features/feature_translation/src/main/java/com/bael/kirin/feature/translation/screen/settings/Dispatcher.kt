@@ -7,8 +7,8 @@ import com.bael.kirin.feature.translation.screen.settings.Intent.ConfigSetting
 import com.bael.kirin.feature.translation.screen.settings.Intent.ConfigSetupFailed
 import com.bael.kirin.feature.translation.screen.settings.Intent.ConfigSetupSuccess
 import com.bael.kirin.feature.translation.screen.settings.Intent.DenyPermissionDrawOverlays
-import com.bael.kirin.lib.arch.base.BaseDispatcher
-import com.bael.kirin.lib.arch.base.contract.DispatcherFactoryAssisted
+import com.bael.kirin.lib.base.di.assisted.DispatcherFactoryAssisted
+import com.bael.kirin.lib.base.dispatcher.BaseDispatcher
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import dagger.hilt.android.scopes.ActivityScoped

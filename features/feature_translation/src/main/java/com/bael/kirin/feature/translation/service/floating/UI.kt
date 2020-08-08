@@ -34,8 +34,8 @@ import com.bael.kirin.feature.translation.view.listener.LayoutMovementListener
 import com.bael.kirin.feature.translation.view.listener.OnKeyEventPreImeListener
 import com.bael.kirin.feature.translation.view.listener.SpinnerItemSelectedListener
 import com.bael.kirin.lib.api.translation.model.entity.Translation
-import com.bael.kirin.lib.arch.base.BaseService
-import com.bael.kirin.lib.arch.wrapper.LazyWrapper
+import com.bael.kirin.lib.base.service.BaseService
+import com.bael.kirin.lib.base.wrapper.LazyWrapper
 import com.bael.kirin.lib.data.model.Data
 import com.bael.kirin.lib.resource.app.AppInfo
 import com.bael.kirin.lib.resource.util.Util.minOreoSdk

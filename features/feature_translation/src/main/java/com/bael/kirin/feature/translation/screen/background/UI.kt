@@ -18,7 +18,7 @@ import com.bael.kirin.feature.translation.constant.SUBJECT_STOP_SERVICE
 import com.bael.kirin.feature.translation.databinding.BackgroundLayoutBinding
 import com.bael.kirin.feature.translation.preference.Preference
 import com.bael.kirin.feature.translation.tracker.Tracker
-import com.bael.kirin.lib.arch.base.BaseActivity
+import com.bael.kirin.lib.base.activity.BaseActivity
 import com.bael.kirin.lib.resource.app.AppInfo
 import com.bael.kirin.lib.ui.notification.NotificationConfigurator
 import com.bael.kirin.lib.ui.notification.NotificationFactory

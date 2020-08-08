@@ -1,6 +1,6 @@
 package com.bael.kirin.feature.translation.screen.background
 
-import com.bael.kirin.lib.arch.base.BaseIntent
+import com.bael.kirin.lib.base.intent.BaseIntent
 
 /**
  * Created by ErickSumargo on 01/06/20.

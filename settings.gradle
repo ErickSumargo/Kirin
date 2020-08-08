@@ -4,7 +4,7 @@ def modules = [
     "app",
     "feature_translation",
     "lib_api_translation",
-    "lib_arch",
+    "lib_base",
     "lib_data",
     "lib_logger",
     "lib_message",
