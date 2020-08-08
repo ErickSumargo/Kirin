@@ -1,7 +1,7 @@
 package com.bael.kirin.feature.translation.tracker
 
 import androidx.core.os.bundleOf
-import com.bael.kirin.lib.tracker.contract.Tracker
+import com.bael.kirin.lib.analytics.contract.Tracker
 import javax.inject.Inject
 
 /**

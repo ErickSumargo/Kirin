@@ -3,6 +3,7 @@ rootProject.name = "Kirin"
 def modules = [
     "app",
     "feature_translation",
+    "lib_analytics",
     "lib_api_translation",
     "lib_base",
     "lib_data",
@@ -14,7 +15,6 @@ def modules = [
     "lib_security",
     "lib_storage",
     "lib_threading",
-    "lib_tracker",
     "lib_ui"
 ]
 

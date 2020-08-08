@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.tracker.contract
+package com.bael.kirin.lib.analytics.contract
 
 import android.os.Bundle
 
