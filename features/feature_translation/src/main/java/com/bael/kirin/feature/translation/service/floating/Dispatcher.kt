@@ -14,8 +14,8 @@ import com.bael.kirin.feature.translation.signal.Signal.BackgroundShown
 import com.bael.kirin.feature.translation.signal.Signal.InstantTranslate
 import com.bael.kirin.feature.translation.signal.Signal.StopService
 import com.bael.kirin.feature.translation.signal.SignalManager
-import com.bael.kirin.lib.arch.base.BaseDispatcher
-import com.bael.kirin.lib.arch.signal.SignalReceiver
+import com.bael.kirin.lib.base.dispatcher.BaseDispatcher
+import com.bael.kirin.lib.base.signal.SignalReceiver
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**

@@ -16,7 +16,7 @@ import com.bael.kirin.feature.translation.databinding.SettingsLayoutBinding
 import com.bael.kirin.feature.translation.preference.Preference
 import com.bael.kirin.feature.translation.tracker.Tracker
 import com.bael.kirin.feature.translation.util.Util.canDrawOverlays
-import com.bael.kirin.lib.arch.base.BaseActivity
+import com.bael.kirin.lib.base.activity.BaseActivity
 import com.bael.kirin.lib.resource.app.AppInfo
 import com.bael.kirin.lib.resource.ext.showMessage
 import com.bael.kirin.lib.resource.ext.textHtmlOf

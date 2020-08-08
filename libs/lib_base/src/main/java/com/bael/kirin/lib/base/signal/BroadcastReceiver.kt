@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.arch.signal
+package com.bael.kirin.lib.base.signal
 
 import android.content.BroadcastReceiver
 import android.content.Context

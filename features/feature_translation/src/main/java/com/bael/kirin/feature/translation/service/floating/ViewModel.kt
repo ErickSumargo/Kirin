@@ -9,7 +9,7 @@ import com.bael.kirin.feature.translation.service.floating.Intent.StartEditing
 import com.bael.kirin.feature.translation.service.floating.Intent.StopEditing
 import com.bael.kirin.lib.api.translation.interactor.contract.TranslateInteractor
 import com.bael.kirin.lib.api.translation.model.entity.Translation
-import com.bael.kirin.lib.arch.base.BaseViewModel
+import com.bael.kirin.lib.base.viewmodel.BaseViewModel
 import com.bael.kirin.lib.data.ext.orDefault
 import com.bael.kirin.lib.data.model.Data
 import dagger.hilt.android.scopes.ServiceScoped

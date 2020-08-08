@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.arch.signal
+package com.bael.kirin.lib.base.signal
 
 /**
  * Created by ErickSumargo on 01/06/20.

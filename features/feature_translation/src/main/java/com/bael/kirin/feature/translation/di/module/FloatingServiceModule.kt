@@ -11,7 +11,7 @@ import com.bael.kirin.feature.translation.service.floating.Intent
 import com.bael.kirin.feature.translation.service.floating.Intent.Initialize
 import com.bael.kirin.feature.translation.service.floating.State
 import com.bael.kirin.feature.translation.service.floating.ViewModel
-import com.bael.kirin.lib.arch.wrapper.LazyWrapper
+import com.bael.kirin.lib.base.wrapper.LazyWrapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.arch.base
+package com.bael.kirin.lib.base.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

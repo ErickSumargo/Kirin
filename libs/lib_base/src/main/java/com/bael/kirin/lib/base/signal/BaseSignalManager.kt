@@ -1,9 +1,8 @@
-package com.bael.kirin.lib.arch.base
+package com.bael.kirin.lib.base.signal
 
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import com.bael.kirin.lib.arch.signal.BroadcastReceiver
 
 /**
  * Created by ErickSumargo on 01/06/20.

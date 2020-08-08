@@ -1,7 +1,8 @@
-package com.bael.kirin.lib.arch.base
+package com.bael.kirin.lib.base.dispatcher
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.bael.kirin.lib.base.viewmodel.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**

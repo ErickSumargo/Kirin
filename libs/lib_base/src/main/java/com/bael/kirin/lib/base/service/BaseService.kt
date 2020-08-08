@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.arch.base
+package com.bael.kirin.lib.base.service
 
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope

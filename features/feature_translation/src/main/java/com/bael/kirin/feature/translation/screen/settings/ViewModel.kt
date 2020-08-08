@@ -9,7 +9,7 @@ import com.bael.kirin.feature.translation.screen.settings.Intent.ConfigSetting
 import com.bael.kirin.feature.translation.screen.settings.Intent.ConfigSetupFailed
 import com.bael.kirin.feature.translation.screen.settings.Intent.ConfigSetupSuccess
 import com.bael.kirin.feature.translation.screen.settings.Intent.DenyPermissionDrawOverlays
-import com.bael.kirin.lib.arch.base.BaseViewModel
+import com.bael.kirin.lib.base.viewmodel.BaseViewModel
 import com.bael.kirin.lib.threading.util.Util.IOThread
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.hilt.Assisted as HiltAssisted
