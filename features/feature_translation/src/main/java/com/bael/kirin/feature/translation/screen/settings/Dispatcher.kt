@@ -29,8 +29,7 @@ class Dispatcher @AssistedInject constructor(
     Action by arg1 {
 
     @AssistedInject.Factory
-    interface Factory :
-        DispatcherFactoryAssisted<Renderer, Action, Dispatcher>
+    interface Factory : DispatcherFactoryAssisted<Renderer, Action, Dispatcher>
 
     override fun dispatchStates(): Observer<Pair<State?, State>> {
         return Observer { (previousState, newState) ->

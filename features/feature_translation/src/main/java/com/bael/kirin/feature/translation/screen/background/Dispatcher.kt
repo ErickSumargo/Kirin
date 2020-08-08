@@ -36,8 +36,7 @@ class Dispatcher @AssistedInject constructor(
     private val signalManager = SignalManager(context, receiver = this)
 
     @AssistedInject.Factory
-    interface Factory :
-        DispatcherFactoryAssisted<Renderer, Action, Dispatcher>
+    interface Factory : DispatcherFactoryAssisted<Renderer, Action, Dispatcher>
 
     override fun dispatchStates(): Observer<Pair<State?, State>> = Observer {}
 
