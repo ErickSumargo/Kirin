@@ -257,7 +257,7 @@ class UI :
                     }
 
                     viewModel().stopEditing()
-                    tracker.trackStopEditingByKeyboard()
+                    tracker.trackStopEditing(by = METHOD_KEYBOARD)
                 }
             )
 
@@ -406,7 +406,7 @@ class UI :
 
     override fun onHideSoftKeyboard() {
         viewModel().stopEditing()
-        tracker.trackStopEditingByBackPressed()
+        tracker.trackStopEditing(by = METHOD_BACK_PRESSED)
     }
 
     override fun instantTranslate(query: String) {
@@ -469,6 +469,9 @@ class UI :
 
     companion object {
         private const val MAX_FLOATING_DIFF_DISTANCE: Int = 16
+
+        private const val METHOD_KEYBOARD: String = "keyboard"
+        private const val METHOD_BACK_PRESSED: String = "back_pressed"
 
         val toggleLayoutParams: LayoutParams =
             if (minOreoSdk) {

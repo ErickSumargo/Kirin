@@ -7,7 +7,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.ui.databinding.ProgressDialogLayoutBinding
-import com.bael.kirin.lib.ui.dialog.permission.PermissionDialog
 import javax.inject.Inject
 
 /**
@@ -41,12 +40,12 @@ class ProgressDialog : DialogFragment() {
 
         fun create(
             message: CharSequence
-        ): PermissionDialog {
+        ): ProgressDialog {
             val data = bundleOf(
                 ARG_MESSAGE to message
             )
 
-            val dialog = PermissionDialog().apply {
+            val dialog = ProgressDialog().apply {
                 arguments = data
                 isCancelable = false
             }

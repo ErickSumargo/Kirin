@@ -1,10 +1,9 @@
 package com.bael.kirin.lib.tracker.implementation
 
+import android.os.Bundle
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.tracker.contract.Tracker
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ServerValue.increment
-import com.google.firebase.database.ktx.database
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
 
@@ -17,25 +16,14 @@ class FirebaseTracker @Inject constructor(
 ) : Tracker,
     Logger by logger {
 
-    override fun <T> track(event: String, value: T) {
+    override fun track(
+        event: String,
+        data: Bundle
+    ) {
         try {
-            val reference = getReference(event)
-            reference.push().setValue(value)
+            Firebase.analytics.logEvent(event, data)
         } catch (cause: Exception) {
             log(cause)
         }
-    }
-
-    override fun trackIncrement(event: String) {
-        try {
-            val reference = getReference(event)
-            reference.setValue(increment(1))
-        } catch (cause: Exception) {
-            log(cause)
-        }
-    }
-
-    private fun getReference(node: String): DatabaseReference {
-        return Firebase.database.getReference("/$node")
     }
 }
