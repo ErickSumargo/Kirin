@@ -9,52 +9,91 @@ import javax.inject.Inject
  */
 
 class Preference @Inject constructor(preference: Preference) : Preference by preference {
-    val configSetupCompleted: Boolean
-        get() = read(PREFERENCE_CONFIG_SETUP_COMPLETED, false)
+    var configSetupCompleted: Boolean
+        get() = read(
+            key = PREFERENCE_CONFIG_SETUP_COMPLETED,
+            defaultValue = false
+        )
+        set(value) = write(
+            key = PREFERENCE_CONFIG_SETUP_COMPLETED,
+            value = value
+        )
 
-    val sourceLanguage: String
-        get() = read(PREFERENCE_SOURCE_LANGUAGE, "")
+    var sourceLanguage: String
+        get() = read(
+            key = PREFERENCE_SOURCE_LANGUAGE,
+            defaultValue = ""
+        )
+        set(value) = write(
+            key = PREFERENCE_SOURCE_LANGUAGE,
+            value = value
+        )
 
-    val targetLanguage: String
-        get() = read(PREFERENCE_TARGET_LANGUAGE, "")
+    var targetLanguage: String
+        get() = read(
+            key = PREFERENCE_TARGET_LANGUAGE,
+            defaultValue = ""
+        )
+        set(value) = write(
+            key = PREFERENCE_TARGET_LANGUAGE,
+            value = value
+        )
 
-    val googleTranslateUrl: String
-        get() = read(PREFERENCE_GOOGLE_TRANSLATE_URL, URL_GOOGLE_TRANSLATE)
+    var googleTranslateUrl: String
+        get() = read(
+            key = PREFERENCE_GOOGLE_TRANSLATE_URL,
+            defaultValue = URL_GOOGLE_TRANSLATE
+        )
+        set(value) = write(
+            key = PREFERENCE_GOOGLE_TRANSLATE_URL,
+            value = value
+        )
 
-    val useResponsiveTranslator: Boolean
-        get() = read(PREFERENCE_RESPONSIVE_TRANSLATOR, true)
+    var useResponsiveTranslator: Boolean
+        get() = read(
+            key = PREFERENCE_RESPONSIVE_TRANSLATOR,
+            defaultValue = true
+        )
+        set(value) = write(
+            key = PREFERENCE_RESPONSIVE_TRANSLATOR,
+            value = value
+        )
 
-    val useAutoEditingMode: Boolean
-        get() = read(PREFERENCE_AUTO_EDITING_MODE, true)
+    var useAutoEditingMode: Boolean
+        get() = read(
+            key = PREFERENCE_AUTO_EDITING_MODE,
+            defaultValue = true
+        )
+        set(value) = write(
+            key = PREFERENCE_AUTO_EDITING_MODE,
+            value = value
+        )
 
-    val autoClearHistory: Boolean
-        get() = read(PREFERENCE_AUTO_CLEAR_HISTORY, false)
+    var autoClearHistory: Boolean
+        get() = read(
+            key = PREFERENCE_AUTO_CLEAR_HISTORY,
+            defaultValue = false
+        )
+        set(value) = write(
+            key = PREFERENCE_AUTO_CLEAR_HISTORY,
+            value = value
+        )
 
-    val useDimBackground: Boolean
-        get() = read(PREFERENCE_DIM_BACKGROUND, true)
-
-    fun setConfigSetupCompleted() {
-        write(PREFERENCE_CONFIG_SETUP_COMPLETED, true)
-    }
-
-    fun setSourceLanguage(language: String) {
-        write(PREFERENCE_SOURCE_LANGUAGE, language)
-    }
-
-    fun setTargetLanguage(language: String) {
-        write(PREFERENCE_TARGET_LANGUAGE, language)
-    }
-
-    fun setGoogleTranslateUrl(url: String) {
-        write(PREFERENCE_GOOGLE_TRANSLATE_URL, url)
-    }
+    var useDimBackground: Boolean
+        get() = read(
+            key = PREFERENCE_DIM_BACKGROUND,
+            defaultValue = true
+        )
+        set(value) = write(
+            key = PREFERENCE_DIM_BACKGROUND,
+            value = value
+        )
 
     companion object {
-        private const val PREFERENCE_CONFIG_SETUP_COMPLETED: String = "config_setup_completed"
-        private const val PREFERENCE_SOURCE_LANGUAGE: String = "source_language"
-        private const val PREFERENCE_TARGET_LANGUAGE: String = "target_language"
-        private const val PREFERENCE_GOOGLE_TRANSLATE_URL: String = "google_translate_url"
-
+        const val PREFERENCE_CONFIG_SETUP_COMPLETED: String = "config_setup_completed"
+        const val PREFERENCE_SOURCE_LANGUAGE: String = "source_language"
+        const val PREFERENCE_TARGET_LANGUAGE: String = "target_language"
+        const val PREFERENCE_GOOGLE_TRANSLATE_URL: String = "google_translate_url"
         const val PREFERENCE_RESPONSIVE_TRANSLATOR: String = "responsive_translator"
         const val PREFERENCE_AUTO_EDITING_MODE: String = "auto_editing_mode"
         const val PREFERENCE_AUTO_CLEAR_HISTORY: String = "auto_clear_history"

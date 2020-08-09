@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.PixelFormat.TRANSLUCENT
-import android.net.Uri.parse
 import android.text.InputType.TYPE_CLASS_TEXT
 import android.view.Gravity.START
 import android.view.Gravity.TOP
@@ -19,6 +18,7 @@ import android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
 import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
 import android.view.WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
 import android.widget.ArrayAdapter
+import androidx.core.net.toUri
 import com.bael.kirin.feature.translation.R
 import com.bael.kirin.feature.translation.constant.LANGUAGE_AUTO
 import com.bael.kirin.feature.translation.constant.SUBJECT_DISMISS_BACKGROUND
@@ -166,14 +166,13 @@ class UI :
 
             spinner.adapter = adapter
             spinner.setSelection(languages.keys.indexOf(sourceLanguage))
-            spinner.onItemSelectedListener =
-                SpinnerItemSelectedListener { index ->
-                    val selectedLanguage = languages.keys.elementAt(index)
-                    preference.setSourceLanguage(language = selectedLanguage)
+            spinner.onItemSelectedListener = SpinnerItemSelectedListener { index ->
+                val selectedLanguage = languages.keys.elementAt(index)
+                preference.sourceLanguage = selectedLanguage
 
-                    viewModel().setSourceLanguage(language = selectedLanguage)
-                    viewModel().translate(sourceLanguage = selectedLanguage)
-                }
+                viewModel().setSourceLanguage(language = selectedLanguage)
+                viewModel().translate(sourceLanguage = selectedLanguage)
+            }
         }
     }
 
@@ -189,8 +188,8 @@ class UI :
                         targetLanguage = sourceLanguage
                     )
 
-                    preference.setSourceLanguage(language = targetLanguage)
-                    preference.setTargetLanguage(language = sourceLanguage)
+                    preference.sourceLanguage = targetLanguage
+                    preference.targetLanguage = sourceLanguage
 
                     tracker.trackSwapLanguage(sourceLanguage, targetLanguage)
                 }
@@ -209,14 +208,13 @@ class UI :
 
             spinner.adapter = adapter
             spinner.setSelection(languages.keys.indexOf(targetLanguage))
-            spinner.onItemSelectedListener =
-                SpinnerItemSelectedListener { index ->
-                    val selectedLanguage = languages.keys.elementAt(index)
-                    preference.setTargetLanguage(language = selectedLanguage)
+            spinner.onItemSelectedListener = SpinnerItemSelectedListener { index ->
+                val selectedLanguage = languages.keys.elementAt(index)
+                preference.targetLanguage = selectedLanguage
 
-                    viewModel().setTargetLanguage(language = selectedLanguage)
-                    viewModel().translate(targetLanguage = selectedLanguage)
-                }
+                viewModel().setTargetLanguage(language = selectedLanguage)
+                viewModel().translate(targetLanguage = selectedLanguage)
+            }
         }
     }
 
@@ -433,14 +431,13 @@ class UI :
         query: String
     ) {
         try {
-            val uri = parse(
-                retrieveDeeplink(
-                    baseUrl = preference.googleTranslateUrl,
-                    sourceLanguage = sourceLanguage,
-                    targetLanguage = targetLanguage,
-                    query = query
-                )
-            )
+            val uri = retrieveDeeplink(
+                baseUrl = preference.googleTranslateUrl,
+                sourceLanguage = sourceLanguage,
+                targetLanguage = targetLanguage,
+                query = query
+            ).toUri()
+
             Intent(ACTION_VIEW, uri).apply {
                 addFlags(FLAG_ACTIVITY_NEW_TASK)
             }.also(::startActivity)

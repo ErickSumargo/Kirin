@@ -58,8 +58,9 @@ class UI :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         removeWindowTitle()
-        adjustDimBackground(useDim = false)
+        adjustDimBackground(useDimBackground = false)
         super.onCreate(savedInstanceState)
+
         dispatcher = dispatcherFactory.create(
             renderer = this,
             action = this
@@ -70,8 +71,8 @@ class UI :
         supportRequestWindowFeature(FEATURE_NO_TITLE)
     }
 
-    private fun adjustDimBackground(useDim: Boolean) {
-        if (useDim) {
+    private fun adjustDimBackground(useDimBackground: Boolean) {
+        if (useDimBackground) {
             window.addFlags(FLAG_DIM_BEHIND)
         } else {
             window.clearFlags(FLAG_DIM_BEHIND)
@@ -79,7 +80,7 @@ class UI :
     }
 
     override fun init() {
-        adjustDimBackground(useDim = preference.useDimBackground)
+        adjustDimBackground(useDimBackground = preference.useDimBackground)
         notifyBackgroundShown()
     }
 

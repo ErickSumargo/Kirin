@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.message.base
+package com.bael.kirin.lib.messaging.base
 
 import android.annotation.SuppressLint
 import com.google.firebase.messaging.FirebaseMessagingService

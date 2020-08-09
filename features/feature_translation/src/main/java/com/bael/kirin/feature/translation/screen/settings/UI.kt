@@ -128,7 +128,7 @@ class UI :
             progressDialog.dismiss()
         }
 
-        preference.setConfigSetupCompleted()
+        preference.configSetupCompleted = true
         viewModel.checkPermissionDrawOverlays()
     }
 
