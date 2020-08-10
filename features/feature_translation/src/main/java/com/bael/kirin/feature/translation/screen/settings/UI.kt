@@ -69,10 +69,12 @@ class UI :
             action = this
         ).observe(lifecycleOwner = this)
 
-        viewModel.setup()
+        if (!preference.configSetupCompleted) {
+            viewModel.setup()
+        }
     }
 
-    override fun renderVersion(version: String) = execute {
+    override fun renderVersion(version: String) = launch {
         viewBinder.versionLabel.also { label ->
             label.text = version
         }
@@ -80,7 +82,7 @@ class UI :
 
     override fun renderSettings(
         settings: Map<Pair<String, Boolean>, Pair<String, String>>
-    ) = execute {
+    ) = launch {
         viewBinder.settingsLayout.also { layout ->
             layout.removeAllViews()
 
@@ -128,7 +130,7 @@ class UI :
             progressDialog.dismiss()
         }
 
-        preference.setConfigSetupCompleted()
+        preference.configSetupCompleted = true
         viewModel.checkPermissionDrawOverlays()
     }
 

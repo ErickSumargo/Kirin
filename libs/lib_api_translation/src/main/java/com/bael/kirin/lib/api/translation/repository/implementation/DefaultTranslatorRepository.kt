@@ -26,18 +26,18 @@ class DefaultTranslatorRepository @Inject constructor(
     ) = flow {
         emit(Data(loading = true))
 
-        translate(
+        val response = translate(
             sourceLanguage,
             targetLanguage,
             query
-        ).let { response ->
-            if (response.isSuccess()) {
-                val data = transform(response.data.orEmpty())
-                emit(Data(result = data))
-            } else {
-                val error = response.error
-                emit(Data(error = error))
-            }
+        )
+
+        if (response.isSuccess()) {
+            val data = transform(response.data.orEmpty())
+            emit(Data(result = data))
+        } else {
+            val error = response.error
+            emit(Data(error = error))
         }
     }
 }

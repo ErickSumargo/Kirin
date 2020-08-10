@@ -26,7 +26,7 @@ class ViewModel @ViewModelInject constructor(
     private val configurator: SetupConfigurator
 ) : BaseViewModel<State, Intent>(initState, initIntent, savedStateHandle) {
 
-    fun setup() = execute(thread = IOThread) {
+    fun setup() = launch(thread = IOThread) {
         configurator.setup { config ->
             val newIntent = when {
                 config.isLoading() -> {
@@ -43,17 +43,17 @@ class ViewModel @ViewModelInject constructor(
         }
     }
 
-    fun checkPermissionDrawOverlays() = execute {
+    fun checkPermissionDrawOverlays() = launch {
         val newIntent = CheckPermissionDrawOverlays
         action(newIntent)
     }
 
-    fun allowPermissionDrawOverlays() = execute {
+    fun allowPermissionDrawOverlays() = launch {
         val newIntent = AllowPermissionDrawOverlays
         action(newIntent)
     }
 
-    fun denyPermissionDrawOverlays() = execute {
+    fun denyPermissionDrawOverlays() = launch {
         val newIntent = DenyPermissionDrawOverlays
         action(newIntent)
     }

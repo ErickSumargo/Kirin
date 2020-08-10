@@ -1,7 +1,17 @@
 apply from: "$rootDir/libs/lib.gradle"
 
+def plugins = [
+    "kotlin-kapt",
+    "dagger.hilt.android.plugin"
+]
+
+plugins.forEach { plugin ->
+    apply plugin: plugin
+}
+
 def deps = [
-    "coroutines"
+    "coroutines",
+    "hilt"
 ]
 
 deps.forEach { dep ->

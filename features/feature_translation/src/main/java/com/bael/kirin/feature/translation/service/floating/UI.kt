@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.PixelFormat.TRANSLUCENT
-import android.net.Uri.parse
 import android.text.InputType.TYPE_CLASS_TEXT
 import android.view.Gravity.START
 import android.view.Gravity.TOP
@@ -19,6 +18,7 @@ import android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
 import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
 import android.view.WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
 import android.widget.ArrayAdapter
+import androidx.core.net.toUri
 import com.bael.kirin.feature.translation.R
 import com.bael.kirin.feature.translation.constant.LANGUAGE_AUTO
 import com.bael.kirin.feature.translation.constant.SUBJECT_DISMISS_BACKGROUND
@@ -50,7 +50,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.bael.kirin.feature.translation.screen.background.UI as UIBackground
 
@@ -114,7 +113,7 @@ class UI :
         return super.onStartCommand(intent, flags, startId)
     }
 
-    override fun renderToggleLayout(active: Boolean) = execute {
+    override fun renderToggleLayout(active: Boolean) = launch {
         toggleBinder.toggleLayout.also { layout ->
             layout.setOnTouchListener(
                 LayoutMovementListener(
@@ -124,7 +123,8 @@ class UI :
                     onClickLayout = {
                         viewModel().setToggleActivation(
                             active = !active,
-                            editMode = preference.useAutoEditingMode
+                            editMode = preference.useAutoEditingMode,
+                            autoClearHistory = preference.autoClearHistory
                         )
                         tracker.trackToggleActivation(!active)
                     },
@@ -150,14 +150,17 @@ class UI :
         }
     }
 
-    override fun renderTranslationLayout() = execute {
+    override fun renderTranslationLayout() = launch {
         translationBinder.translationLayout.also { layout ->
             layout.setOnKeyPressListener(onKeyEventListener = this@UI)
         }
     }
 
-    override fun renderSourceLanguageSpinner(sourceLanguage: String) = execute {
+    override fun renderSourceLanguageSpinner(sourceLanguage: String) = launch {
         translationBinder.sourceLanguageSpinner.also { spinner ->
+            if (spinner.adapter != null) return@also
+
+            val languages = languages
             val adapter = ArrayAdapter(
                 this@UI,
                 R.layout.language_item_layout,
@@ -166,21 +169,20 @@ class UI :
 
             spinner.adapter = adapter
             spinner.setSelection(languages.keys.indexOf(sourceLanguage))
-            spinner.onItemSelectedListener =
-                SpinnerItemSelectedListener { index ->
-                    val selectedLanguage = languages.keys.elementAt(index)
-                    preference.setSourceLanguage(language = selectedLanguage)
+            spinner.onItemSelectedListener = SpinnerItemSelectedListener { index ->
+                val selectedLanguage = languages.keys.elementAt(index)
+                preference.sourceLanguage = selectedLanguage
 
-                    viewModel().setSourceLanguage(language = selectedLanguage)
-                    viewModel().translate(sourceLanguage = selectedLanguage)
-                }
+                viewModel().setSourceLanguage(language = selectedLanguage)
+                viewModel().translate(sourceLanguage = selectedLanguage)
+            }
         }
     }
 
     override fun renderSwapLanguageIcon(
         sourceLanguage: String,
         targetLanguage: String
-    ) = execute {
+    ) = launch {
         translationBinder.swapLanguageIcon.also { icon ->
             icon.setOnClickListener {
                 if (sourceLanguage != LANGUAGE_AUTO) {
@@ -189,8 +191,8 @@ class UI :
                         targetLanguage = sourceLanguage
                     )
 
-                    preference.setSourceLanguage(language = targetLanguage)
-                    preference.setTargetLanguage(language = sourceLanguage)
+                    preference.sourceLanguage = targetLanguage
+                    preference.targetLanguage = sourceLanguage
 
                     tracker.trackSwapLanguage(sourceLanguage, targetLanguage)
                 }
@@ -198,8 +200,10 @@ class UI :
         }
     }
 
-    override fun renderTargetLanguageSpinner(targetLanguage: String) = execute {
+    override fun renderTargetLanguageSpinner(targetLanguage: String) = launch {
         translationBinder.targetLanguageSpinner.also { spinner ->
+            if (spinner.adapter != null) return@also
+
             val languages = languages.filter { it.key != LANGUAGE_AUTO }
             val adapter = ArrayAdapter(
                 this@UI,
@@ -209,14 +213,13 @@ class UI :
 
             spinner.adapter = adapter
             spinner.setSelection(languages.keys.indexOf(targetLanguage))
-            spinner.onItemSelectedListener =
-                SpinnerItemSelectedListener { index ->
-                    val selectedLanguage = languages.keys.elementAt(index)
-                    preference.setTargetLanguage(language = selectedLanguage)
+            spinner.onItemSelectedListener = SpinnerItemSelectedListener { index ->
+                val selectedLanguage = languages.keys.elementAt(index)
+                preference.targetLanguage = selectedLanguage
 
-                    viewModel().setTargetLanguage(language = selectedLanguage)
-                    viewModel().translate(targetLanguage = selectedLanguage)
-                }
+                viewModel().setTargetLanguage(language = selectedLanguage)
+                viewModel().translate(targetLanguage = selectedLanguage)
+            }
         }
     }
 
@@ -224,7 +227,7 @@ class UI :
         sourceLanguage: String,
         targetLanguage: String,
         newQuery: String?
-    ) = execute {
+    ) = launch {
         translationBinder.queryInput.also { input ->
             if (newQuery != null) {
                 input.setText(newQuery)
@@ -268,7 +271,7 @@ class UI :
         }
     }
 
-    override fun renderClearQueryIcon(query: String) = execute {
+    override fun renderClearQueryIcon(query: String) = launch {
         translationBinder.clearQueryIcon.also { icon ->
             icon.visibility = VISIBLE.takeIf { query.isNotEmpty() } ?: INVISIBLE
             icon.setOnClickListener {
@@ -283,7 +286,7 @@ class UI :
         targetLanguage: String,
         query: String,
         data: Data<Translation>
-    ) = execute {
+    ) = launch {
         translationBinder.translationInput.also { input ->
             input.alpha = 1f.takeIf { !data.isLoading() || data.isError() } ?: 0.5f
             input.isEnabled = data.let {
@@ -303,7 +306,7 @@ class UI :
         }
     }
 
-    override fun renderLoadingProgress(data: Data<Translation>) = execute {
+    override fun renderLoadingProgress(data: Data<Translation>) = launch {
         translationBinder.loadingProgress.also { progress ->
             progress.visibility = VISIBLE.takeIf {
                 data.isLoading() || data.isError()
@@ -311,7 +314,7 @@ class UI :
         }
     }
 
-    override fun renderSwipeLayout() = execute {
+    override fun renderSwipeLayout() = launch {
         translationBinder.swipeLayout.also { layout ->
             layout.setOnTouchListener(
                 LayoutMovementListener(
@@ -412,7 +415,8 @@ class UI :
     override fun instantTranslate(query: String) {
         viewModel().setToggleActivation(
             active = true,
-            editMode = false
+            editMode = false,
+            autoClearHistory = preference.autoClearHistory
         )
 
         viewModel().setSourceLanguage(language = LANGUAGE_AUTO)
@@ -433,14 +437,13 @@ class UI :
         query: String
     ) {
         try {
-            val uri = parse(
-                retrieveDeeplink(
-                    baseUrl = preference.googleTranslateUrl,
-                    sourceLanguage = sourceLanguage,
-                    targetLanguage = targetLanguage,
-                    query = query
-                )
-            )
+            val uri = retrieveDeeplink(
+                baseUrl = preference.googleTranslateUrl,
+                sourceLanguage = sourceLanguage,
+                targetLanguage = targetLanguage,
+                query = query
+            ).toUri()
+
             Intent(ACTION_VIEW, uri).apply {
                 addFlags(FLAG_ACTIVITY_NEW_TASK)
             }.also(::startActivity)

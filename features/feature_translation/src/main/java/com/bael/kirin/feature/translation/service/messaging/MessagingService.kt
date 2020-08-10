@@ -1,10 +1,10 @@
-package com.bael.kirin.feature.translation.service.message
+package com.bael.kirin.feature.translation.service.messaging
 
 import android.annotation.SuppressLint
 import com.bael.kirin.feature.translation.constant.SUBJECT_MESSAGING_TRANSLATION
 import com.bael.kirin.feature.translation.di.entry.EntryPoint
 import com.bael.kirin.feature.translation.preference.Preference
-import com.bael.kirin.lib.message.base.BaseMessagingService
+import com.bael.kirin.lib.messaging.base.BaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.EntryPointAccessors
 
@@ -29,7 +29,7 @@ class MessagingService : BaseMessagingService() {
     }
 
     override fun onPayloadReceived(payload: RemoteMessage) {
-        val url = payload.data["url"]
-        url?.let(preference::setGoogleTranslateUrl)
+        val url = payload.data["url"] ?: return
+        preference.googleTranslateUrl = url
     }
 }

@@ -77,7 +77,7 @@ def modules = [
     "lib_base",
     "lib_data",
     "lib_logger",
-    "lib_message",
+    "lib_messaging",
     "lib_network",
     "lib_preference",
     "lib_resource",

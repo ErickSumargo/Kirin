@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class PermissionDialog : DialogFragment() {
     @Inject
-    lateinit var logger: Logger
+    internal lateinit var logger: Logger
 
     private lateinit var listener: PermissionDialogListener
 
