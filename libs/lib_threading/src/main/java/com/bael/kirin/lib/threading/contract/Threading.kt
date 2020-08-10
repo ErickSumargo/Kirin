@@ -1,7 +1,7 @@
 package com.bael.kirin.lib.threading.contract
 
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Default
+import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Concurrent
 import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
@@ -13,7 +13,7 @@ interface Threading : CoroutineScope {
 
     fun launch(
         thread: CoroutineContext = coroutineContext,
-        schema: ExecutorSchema = Default,
+        schema: ExecutorSchema = Concurrent,
         block: suspend CoroutineScope.() -> Unit
     )
 }

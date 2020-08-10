@@ -69,7 +69,9 @@ class UI :
             action = this
         ).observe(lifecycleOwner = this)
 
-        viewModel.setup()
+        if (!preference.configSetupCompleted) {
+            viewModel.setup()
+        }
     }
 
     override fun renderVersion(version: String) = launch {

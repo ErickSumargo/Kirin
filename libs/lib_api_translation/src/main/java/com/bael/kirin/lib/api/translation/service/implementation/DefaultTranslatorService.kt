@@ -24,12 +24,11 @@ class DefaultTranslatorService @Inject constructor(
         targetLanguage: String,
         query: String
     ): Response<String> = get {
-        /*translate(
+        translate(
             query,
             sourceLanguage(sourceLanguage),
             targetLanguage(targetLanguage),
             model("base")
-        ).translatedText*/
-        "$sourceLanguage-$targetLanguage-$query"
+        ).translatedText
     }
 }

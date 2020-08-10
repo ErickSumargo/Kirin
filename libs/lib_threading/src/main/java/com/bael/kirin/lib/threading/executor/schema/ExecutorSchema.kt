@@ -6,7 +6,7 @@ package com.bael.kirin.lib.threading.executor.schema
 
 sealed class ExecutorSchema {
 
-    object Default : ExecutorSchema()
+    object Concurrent : ExecutorSchema()
 
     object Queue : ExecutorSchema()
 

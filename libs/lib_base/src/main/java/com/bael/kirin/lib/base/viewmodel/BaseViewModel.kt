@@ -40,8 +40,10 @@ abstract class BaseViewModel<S, I>(
     private val restoredState: S = savedStateHandle?.get(KEY_SAVED_STATE) ?: initState
     private val mutableStateFlow: MutableStateFlow<S> = MutableStateFlow(restoredState)
 
-    // Here we don't want to replay the previous occurred intent.
-    // It should observe for the incoming new intent instead.
+    /**
+     * Here we don't want to replay the previous occurred intent.
+     * It should observe for the incoming new intent instead.
+     */
     private val mutableIntentFlow: MutableStateFlow<I?> = MutableStateFlow(initIntent)
 
     private val mutableStateData: MutableLiveData<Pair<S?, S>> = MutableLiveData()

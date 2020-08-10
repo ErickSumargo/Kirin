@@ -1,10 +1,11 @@
 package com.bael.kirin.lib.threading.executor
 
+import com.bael.kirin.lib.threading.executor.concurrent.ConcurrentExecutor
 import com.bael.kirin.lib.threading.executor.conflated.ConflatedExecutor
 import com.bael.kirin.lib.threading.executor.queue.QueueExecutor
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
+import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Concurrent
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Conflated
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Default
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Queue
 import javax.inject.Inject
 
@@ -13,9 +14,11 @@ import javax.inject.Inject
  */
 
 class DefaultExecutor @Inject constructor(
+    private val concurrentExecutor: ConcurrentExecutor,
     private val queueExecutor: QueueExecutor,
     private val conflatedExecutor: ConflatedExecutor
 ) : Executor,
+    ConcurrentExecutor by concurrentExecutor,
     QueueExecutor by queueExecutor,
     ConflatedExecutor by conflatedExecutor {
 
@@ -24,8 +27,8 @@ class DefaultExecutor @Inject constructor(
         block: suspend () -> Unit
     ) {
         when (schema) {
-            is Default -> {
-                block()
+            is Concurrent -> {
+                run(block)
             }
             is Queue -> {
                 enqueue(block)
