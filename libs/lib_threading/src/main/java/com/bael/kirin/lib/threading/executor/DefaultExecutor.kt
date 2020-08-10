@@ -1,12 +1,11 @@
 package com.bael.kirin.lib.threading.executor
 
+import com.bael.kirin.lib.threading.executor.ExecutorSchema.Concurrent
+import com.bael.kirin.lib.threading.executor.ExecutorSchema.Conflated
+import com.bael.kirin.lib.threading.executor.ExecutorSchema.Queue
 import com.bael.kirin.lib.threading.executor.concurrent.ConcurrentExecutor
 import com.bael.kirin.lib.threading.executor.conflated.ConflatedExecutor
 import com.bael.kirin.lib.threading.executor.queue.QueueExecutor
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Concurrent
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Conflated
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Queue
 import javax.inject.Inject
 
 /**

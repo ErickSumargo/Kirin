@@ -11,7 +11,7 @@ import com.bael.kirin.lib.api.translation.model.entity.Translation
 import com.bael.kirin.lib.base.viewmodel.BaseViewModel
 import com.bael.kirin.lib.data.ext.orDefault
 import com.bael.kirin.lib.data.model.Data
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Queue
+import com.bael.kirin.lib.threading.executor.ExecutorSchema.Queue
 import dagger.hilt.android.scopes.ServiceScoped
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject

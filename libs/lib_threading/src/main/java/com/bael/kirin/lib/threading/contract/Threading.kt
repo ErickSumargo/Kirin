@@ -1,7 +1,7 @@
 package com.bael.kirin.lib.threading.contract
 
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Concurrent
+import com.bael.kirin.lib.threading.executor.ExecutorSchema
+import com.bael.kirin.lib.threading.executor.ExecutorSchema.Concurrent
 import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 

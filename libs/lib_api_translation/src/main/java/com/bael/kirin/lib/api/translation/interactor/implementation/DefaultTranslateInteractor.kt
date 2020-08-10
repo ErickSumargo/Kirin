@@ -5,7 +5,7 @@ import com.bael.kirin.lib.api.translation.model.entity.Translation
 import com.bael.kirin.lib.api.translation.repository.contract.TranslatorRepository
 import com.bael.kirin.lib.data.model.Data
 import com.bael.kirin.lib.network.interactor.BaseInteractor
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Conflated
+import com.bael.kirin.lib.threading.executor.ExecutorSchema.Conflated
 import com.bael.kirin.lib.threading.ext.subscribe
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

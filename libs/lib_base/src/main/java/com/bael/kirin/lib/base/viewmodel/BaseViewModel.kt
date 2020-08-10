@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.threading.contract.Threading
 import com.bael.kirin.lib.threading.executor.Executor
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
+import com.bael.kirin.lib.threading.executor.ExecutorSchema
 import com.bael.kirin.lib.threading.util.Util.DefaultThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
