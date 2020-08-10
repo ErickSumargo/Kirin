@@ -13,7 +13,10 @@ class SpinnerItemSelectedListener(
 
     override fun onNothingSelected(parent: AdapterView<*>?) = Unit
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        onItemSelected(pos)
-    }
+    override fun onItemSelected(
+        parent: AdapterView<*>?,
+        view: View?,
+        pos: Int,
+        id: Long
+    ) = onItemSelected(pos)
 }

@@ -9,7 +9,7 @@ import com.bael.kirin.lib.data.model.Data
 
 interface TranslateInteractor {
 
-    suspend operator fun invoke(
+    operator fun invoke(
         sourceLanguage: String,
         targetLanguage: String,
         query: String,

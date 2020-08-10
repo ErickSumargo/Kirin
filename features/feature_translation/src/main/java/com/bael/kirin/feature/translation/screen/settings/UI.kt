@@ -72,7 +72,7 @@ class UI :
         viewModel.setup()
     }
 
-    override fun renderVersion(version: String) = execute {
+    override fun renderVersion(version: String) = launch {
         viewBinder.versionLabel.also { label ->
             label.text = version
         }
@@ -80,7 +80,7 @@ class UI :
 
     override fun renderSettings(
         settings: Map<Pair<String, Boolean>, Pair<String, String>>
-    ) = execute {
+    ) = launch {
         viewBinder.settingsLayout.also { layout ->
             layout.removeAllViews()
 

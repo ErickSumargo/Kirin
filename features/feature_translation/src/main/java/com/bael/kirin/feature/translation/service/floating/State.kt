@@ -14,6 +14,5 @@ data class State(
     val targetLanguage: String = "",
     val newQuery: String? = null,
     val query: String = "",
-    val queryFixed: String = "",
     val translationData: Data<Translation> = Data()
 ) : BaseState()

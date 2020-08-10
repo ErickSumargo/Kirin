@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.threading.contract.Threading
+import com.bael.kirin.lib.threading.executor.Executor
+import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
 import com.bael.kirin.lib.threading.util.Util.DefaultThread
-import com.bael.kirin.lib.threading.util.Util.MainThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,15 +32,16 @@ abstract class BaseViewModel<S, I>(
 ) : ViewModel(),
     Threading {
     @Inject
-    protected lateinit var logger: Logger
+    internal lateinit var executor: Executor
+
+    @Inject
+    internal lateinit var logger: Logger
 
     private val restoredState: S = savedStateHandle?.get(KEY_SAVED_STATE) ?: initState
     private val mutableStateFlow: MutableStateFlow<S> = MutableStateFlow(restoredState)
 
-    /**
-     * Here we don't want to replay the previous occurred intent.
-     * It should observe for the incoming new intent instead.
-     */
+    // Here we don't want to replay the previous occurred intent.
+    // It should observe for the incoming new intent instead.
     private val mutableIntentFlow: MutableStateFlow<I?> = MutableStateFlow(initIntent)
 
     private val mutableStateData: MutableLiveData<Pair<S?, S>> = MutableLiveData()
@@ -56,39 +58,44 @@ abstract class BaseViewModel<S, I>(
     }
 
     private fun observeState() {
-        execute(MainThread) {
+        viewModelScope.launch {
             mutableStateFlow.scan(null as S?) { previousState, newState ->
                 mutableStateData.value = previousState to newState
-                savedStateHandle?.set(KEY_SAVED_STATE, newState)
-
                 newState
             }.collect()
         }
     }
 
     private fun observeIntent() {
-        execute(MainThread) {
+        viewModelScope.launch {
             mutableIntentFlow.collect { intent ->
                 mutableIntentData.value = intent
             }
         }
     }
 
-    override fun execute(
+    private fun saveState(newState: S) {
+        viewModelScope.launch {
+            savedStateHandle?.set(KEY_SAVED_STATE, newState)
+        }
+    }
+
+    override fun launch(
         thread: CoroutineContext,
+        schema: ExecutorSchema,
         block: suspend CoroutineScope.() -> Unit
     ) {
         try {
-            viewModelScope.launch(
-                context = thread,
-                block = block
-            )
+            viewModelScope.launch(context = thread) {
+                executor.execute(schema) { block() }
+            }
         } catch (cause: Exception) {
             logger.log(cause)
         }
     }
 
     protected fun render(newState: S) {
+        saveState(newState)
         mutableStateFlow.value = newState
     }
 

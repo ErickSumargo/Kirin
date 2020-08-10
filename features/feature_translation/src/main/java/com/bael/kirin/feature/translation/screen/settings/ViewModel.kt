@@ -3,6 +3,7 @@ package com.bael.kirin.feature.translation.screen.settings
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.bael.kirin.feature.translation.configurator.SetupConfigurator
+import com.bael.kirin.feature.translation.preference.Preference
 import com.bael.kirin.feature.translation.screen.settings.Intent.AllowPermissionDrawOverlays
 import com.bael.kirin.feature.translation.screen.settings.Intent.CheckPermissionDrawOverlays
 import com.bael.kirin.feature.translation.screen.settings.Intent.ConfigSetting
@@ -23,37 +24,43 @@ class ViewModel @ViewModelInject constructor(
     initState: State,
     initIntent: Intent?,
     @HiltAssisted savedStateHandle: SavedStateHandle,
+    private val preference: Preference,
     private val configurator: SetupConfigurator
 ) : BaseViewModel<State, Intent>(initState, initIntent, savedStateHandle) {
 
-    fun setup() = execute(thread = IOThread) {
-        configurator.setup { config ->
-            val newIntent = when {
-                config.isLoading() -> {
-                    ConfigSetting
-                }
-                config.isError() -> {
-                    ConfigSetupFailed(message = config.error?.message.orEmpty())
-                }
-                else -> {
-                    ConfigSetupSuccess
-                }
-            }
+    fun setup() = launch(thread = IOThread) {
+        if (preference.configSetupCompleted) {
+            val newIntent = ConfigSetupSuccess
             action(newIntent)
+        } else {
+            configurator.setup { config ->
+                val newIntent = when {
+                    config.isLoading() -> {
+                        ConfigSetting
+                    }
+                    config.isError() -> {
+                        ConfigSetupFailed(message = config.error?.message.orEmpty())
+                    }
+                    else -> {
+                        ConfigSetupSuccess
+                    }
+                }
+                action(newIntent)
+            }
         }
     }
 
-    fun checkPermissionDrawOverlays() = execute {
+    fun checkPermissionDrawOverlays() = launch {
         val newIntent = CheckPermissionDrawOverlays
         action(newIntent)
     }
 
-    fun allowPermissionDrawOverlays() = execute {
+    fun allowPermissionDrawOverlays() = launch {
         val newIntent = AllowPermissionDrawOverlays
         action(newIntent)
     }
 
-    fun denyPermissionDrawOverlays() = execute {
+    fun denyPermissionDrawOverlays() = launch {
         val newIntent = DenyPermissionDrawOverlays
         action(newIntent)
     }

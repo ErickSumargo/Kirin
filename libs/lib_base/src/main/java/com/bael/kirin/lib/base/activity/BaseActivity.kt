@@ -7,8 +7,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.threading.contract.Threading
+import com.bael.kirin.lib.threading.executor.Executor
+import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
 import com.bael.kirin.lib.threading.util.Util.MainThread
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -19,7 +22,7 @@ import kotlin.coroutines.CoroutineContext
 abstract class BaseActivity<VB : ViewBinding, DF : Any, VM : ViewModel> :
     AppCompatActivity(),
     Threading {
-    override val coroutineContext: CoroutineContext get() = MainThread
+    override val coroutineContext: CoroutineContext = MainThread
 
     @Inject
     protected lateinit var viewBinder: VB
@@ -29,6 +32,9 @@ abstract class BaseActivity<VB : ViewBinding, DF : Any, VM : ViewModel> :
 
     @Inject
     internal lateinit var viewModelDeferred: @JvmSuppressWildcards Lazy<VM>
+
+    @Inject
+    internal lateinit var executor: Executor
 
     @Inject
     protected lateinit var logger: Logger
@@ -44,12 +50,15 @@ abstract class BaseActivity<VB : ViewBinding, DF : Any, VM : ViewModel> :
         }
     }
 
-    override fun execute(
+    override fun launch(
         thread: CoroutineContext,
+        schema: ExecutorSchema,
         block: suspend CoroutineScope.() -> Unit
     ) {
         try {
-            lifecycleScope.launchWhenCreated(block)
+            lifecycleScope.launch(context = thread) {
+                executor.execute(schema) { block() }
+            }
         } catch (cause: Exception) {
             logger.log(cause)
         }

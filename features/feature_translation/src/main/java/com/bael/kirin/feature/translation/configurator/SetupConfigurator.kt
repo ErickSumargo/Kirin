@@ -3,7 +3,6 @@ package com.bael.kirin.feature.translation.configurator
 import android.content.Context
 import com.bael.kirin.feature.translation.R
 import com.bael.kirin.feature.translation.constant.KEY_PRIVATE
-import com.bael.kirin.feature.translation.preference.Preference
 import com.bael.kirin.lib.api.translation.constant.FILE_CONFIG
 import com.bael.kirin.lib.data.model.Data
 import com.bael.kirin.lib.network.model.Error
@@ -28,39 +27,29 @@ class SetupConfigurator @Inject constructor(
     storage: Storage,
     cipher: Cipher,
     editor: Editor,
-    private val preference: Preference,
     @ApplicationContext private val context: Context
 ) : Storage by storage,
     Cipher by cipher,
     Editor by editor {
 
     suspend fun setup(callback: (Data<Boolean>) -> Unit) {
-        if (preference.configSetupCompleted) {
-            val result = Data(result = true)
-            callback(result)
-        } else {
-            val result = Data<Boolean>(loading = true)
-            callback(result)
+        callback(Data(loading = true))
 
-            download(fileName = FILE_CONFIG) { data, error ->
-                if (error != null) {
-                    val result = Data(
-                        result = false,
-                        error = error
-                    )
-                    callback(result)
-                } else {
-                    val plainData = decryptData(
-                        data = data,
-                        key = KEY_PRIVATE
-                    )
+        download(fileName = FILE_CONFIG) { data, error ->
+            if (error != null) {
+                val result = Data<Boolean>(error = error)
+                callback(result)
+            } else {
+                val plainData = decryptData(
+                    data = data,
+                    key = KEY_PRIVATE
+                )
 
-                    saveFile(
-                        fileName = FILE_CONFIG,
-                        data = plainData,
-                        callback = callback
-                    )
-                }
+                saveFile(
+                    fileName = FILE_CONFIG,
+                    data = plainData,
+                    callback = callback
+                )
             }
         }
     }
