@@ -144,7 +144,7 @@ class Dispatcher constructor(
                 stopService()
             }
             is InstantTranslate -> {
-                instantTranslate(signal.query)
+                instantTranslate(signal.instantQuery)
             }
         }
     }

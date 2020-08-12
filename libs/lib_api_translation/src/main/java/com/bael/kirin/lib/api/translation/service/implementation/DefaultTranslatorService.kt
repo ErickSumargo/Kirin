@@ -19,7 +19,7 @@ class DefaultTranslatorService @Inject constructor() :
     BaseService(),
     TranslatorService {
 
-    override suspend fun translate(
+    override fun translate(
         sourceLanguage: String,
         targetLanguage: String,
         query: String

@@ -39,17 +39,9 @@ class SetupConfigurator @Inject constructor(
         download(fileName = FILE_CONFIG)
             .collect { response ->
                 if (response.isError()) {
-                    val result = Data(
-                        result = false,
-                        error = response.error
-                    )
-                    callback(result)
+                    callback(Data(error = response.error))
                 } else {
-                    val plainData = decryptData(
-                        data = response.data,
-                        key = KEY_PRIVATE
-                    )
-
+                    val plainData = decryptData(data = response.data, key = KEY_PRIVATE)
                     saveFile(
                         fileName = FILE_CONFIG,
                         data = plainData,
@@ -59,15 +51,9 @@ class SetupConfigurator @Inject constructor(
             }
     }
 
-    private fun decryptData(
-        data: ByteArray?,
-        key: String
-    ): String? {
+    private fun decryptData(data: ByteArray?, key: String): String? {
         if (data == null) return null
-        return decrypt(
-            cipherData = String(data),
-            key = key
-        )
+        return decrypt(cipherData = String(data), key = key)
     }
 
     private fun saveFile(

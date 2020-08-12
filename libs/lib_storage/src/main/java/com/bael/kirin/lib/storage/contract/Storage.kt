@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface Storage {
 
-    suspend fun download(fileName: String): Flow<Response<ByteArray>>
+    fun download(fileName: String): Flow<Response<ByteArray>>
 }

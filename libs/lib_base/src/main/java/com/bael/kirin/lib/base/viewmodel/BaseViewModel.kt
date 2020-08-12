@@ -44,7 +44,7 @@ abstract class BaseViewModel<S, I>(
 
     /**
      * Here we don't want to replay the previous occurred intent
-     * cached by @property savedStateHandle.
+     * cached by savedStateHandle.
      *
      * It should observe for the incoming new intent instead.
      */
@@ -70,6 +70,8 @@ abstract class BaseViewModel<S, I>(
     ) {
         try {
             viewModelScope.launch(context = thread) {
+                // Investigate properties executor and logger are not injected instantly
+                // when this class in instantiation.
                 if (::executor.isInitialized.not()) block()
                 else executor.execute(schema) { block() }
             }

@@ -24,7 +24,7 @@ class FirebaseStorage @Inject constructor(
 ) : Storage,
     Logger by logger {
 
-    override suspend fun download(
+    override fun download(
         fileName: String
     ): Flow<Response<ByteArray>> = channelFlow {
         Firebase.storage

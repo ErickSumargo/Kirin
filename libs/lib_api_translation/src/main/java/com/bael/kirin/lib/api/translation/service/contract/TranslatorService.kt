@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TranslatorService {
 
-    suspend fun translate(
+    fun translate(
         sourceLanguage: String,
         targetLanguage: String,
         query: String

@@ -426,7 +426,7 @@ class UI :
         tracker.trackStopEditing(by = METHOD_BACK_PRESSED)
     }
 
-    override fun instantTranslate(query: String) {
+    override fun instantTranslate(instantQuery: String) {
         viewModel.setToggleActivation(
             active = true,
             editMode = false,
@@ -434,9 +434,11 @@ class UI :
         )
 
         viewModel.setSourceLanguage(language = LANGUAGE_AUTO)
-        viewModel.setInstantQuery(instantQuery = query)
-        viewModel.translate(query = query)
+        viewModel.setInstantQuery(instantQuery = instantQuery)
 
+        if (!preference.useResponsiveTranslator) {
+            viewModel.translate(query = instantQuery)
+        }
         tracker.trackToggleActivation(active = true)
     }
 

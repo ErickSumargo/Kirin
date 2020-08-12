@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TranslatorRepository {
 
-    suspend fun get(
+    fun get(
         sourceLanguage: String,
         targetLanguage: String,
         query: String

@@ -59,12 +59,7 @@ class ViewModel @Inject constructor(
     }
 
     fun setSourceLanguage(language: String) = launch {
-        val newState = state.copy(
-            sourceLanguage = language,
-            query = "",
-            instantQuery = "",
-            translationData = Data()
-        )
+        val newState = state.copy(sourceLanguage = language)
         render(newState)
     }
 

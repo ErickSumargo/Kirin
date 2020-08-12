@@ -20,7 +20,7 @@ class DefaultTranslatorRepository @Inject constructor(
     TranslatorService by apiService,
     DataTransformer<String, Translation> by dataTransformer {
 
-    override suspend fun get(
+    override fun get(
         sourceLanguage: String,
         targetLanguage: String,
         query: String

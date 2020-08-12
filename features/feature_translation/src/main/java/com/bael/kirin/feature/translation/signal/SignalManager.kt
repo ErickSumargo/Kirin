@@ -51,8 +51,8 @@ class SignalManager(
                 StopService
             }
             SUBJECT_INSTANT_TRANSLATE -> {
-                val query = intent.getStringExtra(SUBJECT_EXTRA_QUERY).orEmpty()
-                InstantTranslate(query)
+                val instantQuery = intent.getStringExtra(SUBJECT_EXTRA_QUERY).orEmpty()
+                InstantTranslate(instantQuery)
             }
             else -> null
         }
