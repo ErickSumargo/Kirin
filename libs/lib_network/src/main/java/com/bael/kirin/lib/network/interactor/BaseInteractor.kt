@@ -2,7 +2,7 @@ package com.bael.kirin.lib.network.interactor
 
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.threading.contract.Threading
-import com.bael.kirin.lib.threading.executor.Executor
+import com.bael.kirin.lib.threading.executor.contract.Executor
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
 import com.bael.kirin.lib.threading.util.Util.IOThread
 import kotlinx.coroutines.CoroutineScope

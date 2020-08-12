@@ -10,9 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
  */
 
 @ExperimentalCoroutinesApi
-abstract class BaseDispatcher<S, I>(viewModel: Lazy<BaseViewModel<S, I>>) {
-    private val viewModel: BaseViewModel<S, I> by lazy { viewModel.value }
-
+abstract class BaseDispatcher<S, I>(private val viewModel: BaseViewModel<S, I>) {
     private val statesObserver: Observer<Pair<S?, S>> get() = dispatchStates()
     private val intentObserver: Observer<I?> get() = dispatchIntent()
 

@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.threading.executor.conflated
+package com.bael.kirin.lib.threading.executor.conflated.contract
 
 /**
  * Created by ErickSumargo on 01/06/20.

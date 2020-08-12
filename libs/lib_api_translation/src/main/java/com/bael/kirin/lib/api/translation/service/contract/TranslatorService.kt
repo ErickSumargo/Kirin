@@ -1,6 +1,7 @@
 package com.bael.kirin.lib.api.translation.service.contract
 
 import com.bael.kirin.lib.network.model.Response
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Created by ErickSumargo on 15/06/20.
@@ -8,9 +9,9 @@ import com.bael.kirin.lib.network.model.Response
 
 interface TranslatorService {
 
-    suspend fun translate(
+    fun translate(
         sourceLanguage: String,
         targetLanguage: String,
         query: String
-    ): Response<String>
+    ): Flow<Response<String>>
 }

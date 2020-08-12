@@ -7,17 +7,15 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.bael.kirin.lib.logger.contract.Logger
-import javax.inject.Inject
 
 /**
  * Created by ErickSumargo on 01/06/20.
  */
 
 class PermissionDialog : DialogFragment() {
-    @Inject
-    internal lateinit var logger: Logger
-
     private lateinit var listener: PermissionDialogListener
+
+    lateinit var logger: Logger
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

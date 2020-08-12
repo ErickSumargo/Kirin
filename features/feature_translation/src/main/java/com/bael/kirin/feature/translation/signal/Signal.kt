@@ -14,5 +14,5 @@ sealed class Signal {
 
     object StopService : Signal()
 
-    data class InstantTranslate(val query: String) : Signal()
+    data class InstantTranslate(val instantQuery: String) : Signal()
 }

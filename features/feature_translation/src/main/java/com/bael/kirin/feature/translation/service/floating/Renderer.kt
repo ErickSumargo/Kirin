@@ -25,7 +25,7 @@ interface Renderer {
     fun renderQueryInput(
         sourceLanguage: String,
         targetLanguage: String,
-        newQuery: String?
+        instantQuery: String?
     )
 
     fun renderClearQueryIcon(query: String)

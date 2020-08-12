@@ -30,7 +30,7 @@ interface Action {
         query: String
     )
 
-    fun instantTranslate(query: String)
+    fun instantTranslate(instantQuery: String)
 
     fun onBackgroundShown()
 

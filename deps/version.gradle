@@ -40,6 +40,9 @@ ext {
         coroutines          : '1.3.7',
         kotlin              : '1.3.72',
 
+        // leakcanary
+        leakcanary          : '2.4',
+
         // square
         assistedinject      : '0.5.2'
     ]

@@ -1,5 +1,6 @@
-package com.bael.kirin.lib.threading.executor.conflated
+package com.bael.kirin.lib.threading.executor.conflated.implementation
 
+import com.bael.kirin.lib.threading.executor.conflated.contract.ConflatedExecutor
 import kotlinx.coroutines.CoroutineStart.LAZY
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async

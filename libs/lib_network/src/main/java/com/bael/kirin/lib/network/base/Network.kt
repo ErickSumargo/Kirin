@@ -17,15 +17,19 @@ import javax.inject.Singleton
 
 @Singleton
 class Network @Inject constructor(@ApplicationContext context: Context) {
-    private val manager: ConnectivityManager by lazy {
+    private val connectivityManager: ConnectivityManager by lazy {
         context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
     private fun networkInfo(type: Int): NetworkInfo.State {
-        return manager.getNetworkInfo(type).state
+        return connectivityManager.getNetworkInfo(type).state
+    }
+
+    private fun isNetworkConnected(networkType: Int): Boolean {
+        return networkInfo(networkType) == CONNECTED
     }
 
     fun isConnected(): Boolean {
-        return networkInfo(TYPE_MOBILE) == CONNECTED || networkInfo(TYPE_WIFI) == CONNECTED
+        return isNetworkConnected(TYPE_MOBILE) || isNetworkConnected(TYPE_WIFI)
     }
 }

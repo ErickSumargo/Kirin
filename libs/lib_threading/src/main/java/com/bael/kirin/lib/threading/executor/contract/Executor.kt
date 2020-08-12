@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.threading.executor
+package com.bael.kirin.lib.threading.executor.contract
 
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
 

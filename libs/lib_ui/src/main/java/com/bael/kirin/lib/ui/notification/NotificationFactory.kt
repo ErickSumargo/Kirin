@@ -23,7 +23,7 @@ class NotificationFactory @Inject constructor(
     @ApplicationContext private val context: Context,
     private val appInfo: AppInfo
 ) {
-    private val manager: NotificationManager by lazy {
+    private val notificationManager: NotificationManager by lazy {
         context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
@@ -55,18 +55,18 @@ class NotificationFactory @Inject constructor(
     fun push() {
         val builder = constructBuilder()
         val channel = constructChannel()
-        channel?.let(manager::createNotificationChannel)
+        channel?.let(notificationManager::createNotificationChannel)
 
         if (::configurator.isInitialized) {
-            manager.notify(configurator.notificationId, builder.build())
+            notificationManager.notify(configurator.notificationId, builder.build())
         } else {
-            manager.notify(appInfo.name.hashCode(), builder.build())
+            notificationManager.notify(appInfo.name.hashCode(), builder.build())
         }
     }
 
     fun isActive(id: Int): Boolean {
         if (!minMarshmallowSdk) return false
-        return manager.activeNotifications.find { it.id == id } != null
+        return notificationManager.activeNotifications.find { it.id == id } != null
     }
 
     fun dismiss(id: Int) {

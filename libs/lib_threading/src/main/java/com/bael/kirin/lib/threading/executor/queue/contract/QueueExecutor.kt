@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.threading.executor.queue
+package com.bael.kirin.lib.threading.executor.queue.contract
 
 /**
  * Created by ErickSumargo on 01/06/20.

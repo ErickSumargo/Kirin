@@ -19,7 +19,10 @@ class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
         )
     }
 
-    fun trackPreferenceUpdate(key: String, active: Boolean) {
+    fun trackPreferenceUpdate(
+        key: String,
+        active: Boolean
+    ) {
         track(
             event = TRACK_PREFERENCE_UPDATE,
             data = bundleOf(
@@ -38,7 +41,10 @@ class Tracker @Inject constructor(tracker: Tracker) : Tracker by tracker {
         )
     }
 
-    fun trackSwapLanguage(sourceLanguage: String, targetLanguage: String) {
+    fun trackSwapLanguage(
+        sourceLanguage: String,
+        targetLanguage: String
+    ) {
         track(
             event = TRACK_SWAP_LANGUAGE,
             data = bundleOf(

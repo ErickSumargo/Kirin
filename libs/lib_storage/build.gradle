@@ -10,6 +10,7 @@ plugins.forEach { plugin ->
 }
 
 def deps = [
+    "coroutines",
     "firebase",
     "hilt"
 ]
@@ -20,7 +21,8 @@ deps.forEach { dep ->
 
 def modules = [
     "lib_logger",
-    "lib_network"
+    "lib_network",
+    "lib_threading"
 ]
 
 dependencies {

@@ -65,13 +65,14 @@ class UI :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dispatcherFactory.create(
+            viewModel = viewModel,
             renderer = this,
             action = this
         ).observe(lifecycleOwner = this)
 
-        if (!preference.configSetupCompleted) {
-            viewModel.setup()
-        }
+        viewModel.setup(
+            configSetupCompleted = preference.configSetupCompleted
+        )
     }
 
     override fun renderVersion(version: String) = launch {
@@ -116,6 +117,7 @@ class UI :
         progressDialog = ProgressDialog.create(
             message = textOf(R.string.progress_dialog_configuring_description)
         ).also { dialog ->
+            dialog.logger = logger
             dialog.show(supportFragmentManager, TAG_PROGRESS_DIALOG)
         }
     }
@@ -154,6 +156,7 @@ class UI :
             actionNegativeText = textOf(R.string.permission_dialog_action_negative_text),
             actionPositiveText = textOf(R.string.permission_dialog_action_positive_text)
         ).also { dialog ->
+            dialog.logger = logger
             dialog.show(supportFragmentManager, TAG_PERMISSION_DIALOG)
         }
     }

@@ -21,15 +21,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ActivityScoped
 @ExperimentalCoroutinesApi
 class Dispatcher @AssistedInject constructor(
-    viewModel: Lazy<ViewModel>,
-    @Assisted arg0: Renderer,
-    @Assisted arg1: Action
-) : BaseDispatcher<State, Intent>(viewModel),
-    Renderer by arg0,
-    Action by arg1 {
+    @Assisted arg0: ViewModel,
+    @Assisted arg1: Renderer,
+    @Assisted arg2: Action
+) : BaseDispatcher<State, Intent>(arg0),
+    Renderer by arg1,
+    Action by arg2 {
 
     @AssistedInject.Factory
-    interface Factory : DispatcherFactoryAssisted<Renderer, Action, Dispatcher>
+    interface Factory : DispatcherFactoryAssisted<ViewModel, Renderer, Action, Dispatcher>
 
     override fun dispatchStates(): Observer<Pair<State?, State>> {
         return Observer { (previousState, newState) ->

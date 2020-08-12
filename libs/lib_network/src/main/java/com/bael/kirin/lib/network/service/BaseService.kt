@@ -17,12 +17,12 @@ abstract class BaseService {
     @Inject
     lateinit var logger: Logger
 
-    inline fun <reified T> get(request: () -> T): Response<T> {
+    protected inline fun <reified T> get(request: () -> T): Response<T> {
         if (!network.isConnected()) return Response(error = Error())
 
         return try {
-            val result = request()
-            Response(data = result)
+            val response = request()
+            Response(data = response)
         } catch (cause: Exception) {
             logger.log(cause)
 

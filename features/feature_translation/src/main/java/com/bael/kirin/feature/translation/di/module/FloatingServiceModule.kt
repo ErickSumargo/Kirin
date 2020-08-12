@@ -10,8 +10,6 @@ import com.bael.kirin.feature.translation.preference.Preference
 import com.bael.kirin.feature.translation.service.floating.Intent
 import com.bael.kirin.feature.translation.service.floating.Intent.Initialize
 import com.bael.kirin.feature.translation.service.floating.State
-import com.bael.kirin.feature.translation.service.floating.ViewModel
-import com.bael.kirin.lib.base.wrapper.LazyWrapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -64,10 +62,4 @@ object FloatingServiceModule {
     @ServiceScoped
     @Provides
     fun provideIntent(): Intent = Initialize
-
-    @ServiceScoped
-    @Provides
-    fun provideViewModel(viewModel: ViewModel): LazyWrapper<ViewModel> {
-        return LazyWrapper(viewModel)
-    }
 }
