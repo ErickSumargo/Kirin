@@ -35,8 +35,7 @@ class DefaultTranslateInteractor @Inject constructor(
 
         translationDataFlow
             .onStart {
-                val loading = Data<Translation>(loading = true)
-                response(loading)
+                response(Data(loading = true))
             }.collect { data ->
                 response(data)
             }
