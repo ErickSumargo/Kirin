@@ -436,6 +436,8 @@ class UI :
         viewModel.setSourceLanguage(language = LANGUAGE_AUTO)
         viewModel.setInstantQuery(instantQuery = instantQuery)
 
+        // We only do instant translate if responsive translator
+        // preference is not set.
         if (!preference.useResponsiveTranslator) {
             viewModel.translate(query = instantQuery)
         }
