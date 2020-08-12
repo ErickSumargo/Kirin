@@ -12,6 +12,7 @@ import com.bael.kirin.lib.security.contract.Editor
 import com.bael.kirin.lib.storage.contract.Storage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 /**
@@ -35,23 +36,27 @@ class SetupConfigurator @Inject constructor(
     suspend fun setup(callback: (Data<Boolean>) -> Unit) {
         callback(Data(loading = true))
 
-        download(fileName = FILE_CONFIG) { data, error ->
-            if (error != null) {
-                val result = Data<Boolean>(error = error)
-                callback(result)
-            } else {
-                val plainData = decryptData(
-                    data = data,
-                    key = KEY_PRIVATE
-                )
+        download(fileName = FILE_CONFIG)
+            .collect { response ->
+                if (response.isError()) {
+                    val result = Data(
+                        result = false,
+                        error = response.error
+                    )
+                    callback(result)
+                } else {
+                    val plainData = decryptData(
+                        data = response.data,
+                        key = KEY_PRIVATE
+                    )
 
-                saveFile(
-                    fileName = FILE_CONFIG,
-                    data = plainData,
-                    callback = callback
-                )
+                    saveFile(
+                        fileName = FILE_CONFIG,
+                        data = plainData,
+                        callback = callback
+                    )
+                }
             }
-        }
     }
 
     private fun decryptData(
@@ -59,7 +64,6 @@ class SetupConfigurator @Inject constructor(
         key: String
     ): String? {
         if (data == null) return null
-
         return decrypt(
             cipherData = String(data),
             key = key
@@ -71,22 +75,7 @@ class SetupConfigurator @Inject constructor(
         data: String?,
         callback: (Data<Boolean>) -> Unit
     ) {
-        writeData(
-            fileName,
-            data,
-            callback
-        )
-    }
-
-    private fun writeData(
-        fileName: String,
-        data: String?,
-        callback: (Data<Boolean>) -> Unit
-    ) {
-        writeFile(
-            fileName,
-            data
-        ) { success ->
+        writeFile(fileName, data) { success ->
             val response = if (success) {
                 Data(result = success)
             } else {

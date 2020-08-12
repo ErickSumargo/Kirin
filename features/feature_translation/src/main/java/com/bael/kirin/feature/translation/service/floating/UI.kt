@@ -26,6 +26,7 @@ import com.bael.kirin.feature.translation.constant.SUBJECT_EXTRA_QUERY
 import com.bael.kirin.feature.translation.constant.languages
 import com.bael.kirin.feature.translation.databinding.ToggleLayoutBinding
 import com.bael.kirin.feature.translation.databinding.TranslationLayoutBinding
+import com.bael.kirin.feature.translation.ext.addQueryActionListener
 import com.bael.kirin.feature.translation.ext.addQueryChangedListener
 import com.bael.kirin.feature.translation.preference.Preference
 import com.bael.kirin.feature.translation.tracker.Tracker
@@ -35,7 +36,6 @@ import com.bael.kirin.feature.translation.view.listener.OnKeyEventPreImeListener
 import com.bael.kirin.feature.translation.view.listener.SpinnerItemSelectedListener
 import com.bael.kirin.lib.api.translation.model.entity.Translation
 import com.bael.kirin.lib.base.service.BaseService
-import com.bael.kirin.lib.base.wrapper.LazyWrapper
 import com.bael.kirin.lib.data.model.Data
 import com.bael.kirin.lib.resource.app.AppInfo
 import com.bael.kirin.lib.resource.util.Util.minOreoSdk
@@ -78,7 +78,7 @@ class UI :
     lateinit var translationBinder: TranslationLayoutBinding
 
     @Inject
-    lateinit var viewModel: LazyWrapper<ViewModel>
+    lateinit var viewModel: ViewModel
 
     @Inject
     lateinit var notification: NotificationFactory
@@ -97,7 +97,7 @@ class UI :
         super.onCreate()
         dispatcher = Dispatcher(
             context = this,
-            viewModel = viewModel.instance,
+            viewModel = viewModel,
             renderer = this,
             action = this
         ).also { it.observe(lifecycleOwner = this) }
@@ -109,7 +109,7 @@ class UI :
         startId: Int
     ): Int {
         val query = intent?.getStringExtra(SUBJECT_EXTRA_QUERY)
-        packet = Packet(newQuery = query)
+        packet = Packet(instantQuery = query)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -121,7 +121,7 @@ class UI :
                     layoutParams = toggleLayoutParams,
                     maxDiffDistance = MAX_FLOATING_DIFF_DISTANCE,
                     onClickLayout = {
-                        viewModel().setToggleActivation(
+                        viewModel.setToggleActivation(
                             active = !active,
                             editMode = preference.useAutoEditingMode,
                             autoClearHistory = preference.autoClearHistory
@@ -158,23 +158,29 @@ class UI :
 
     override fun renderSourceLanguageSpinner(sourceLanguage: String) = launch {
         translationBinder.sourceLanguageSpinner.also { spinner ->
-            if (spinner.adapter != null) return@also
-
             val languages = languages
-            val adapter = ArrayAdapter(
-                this@UI,
-                R.layout.language_item_layout,
-                languages.values.toTypedArray()
-            )
+            if (spinner.adapter == null) {
+                val adapter = ArrayAdapter(
+                    this@UI,
+                    R.layout.language_item_layout,
+                    languages.values.toTypedArray()
+                )
 
-            spinner.adapter = adapter
-            spinner.setSelection(languages.keys.indexOf(sourceLanguage))
-            spinner.onItemSelectedListener = SpinnerItemSelectedListener { index ->
-                val selectedLanguage = languages.keys.elementAt(index)
-                preference.sourceLanguage = selectedLanguage
+                spinner.adapter = adapter
+                spinner.onItemSelectedListener = SpinnerItemSelectedListener { index ->
+                    val selectedLanguage = languages.keys.elementAt(index)
+                    preference.sourceLanguage = selectedLanguage
 
-                viewModel().setSourceLanguage(language = selectedLanguage)
-                viewModel().translate(sourceLanguage = selectedLanguage)
+                    viewModel.setSourceLanguage(language = selectedLanguage)
+                    viewModel.translate(sourceLanguage = selectedLanguage)
+                }
+
+                spinner.setSelection(languages.keys.indexOf(sourceLanguage))
+            }
+
+            val languageIndex = languages.keys.indexOf(sourceLanguage)
+            if (languageIndex != spinner.selectedItemPosition) {
+                spinner.setSelection(languageIndex)
             }
         }
     }
@@ -186,14 +192,13 @@ class UI :
         translationBinder.swapLanguageIcon.also { icon ->
             icon.setOnClickListener {
                 if (sourceLanguage != LANGUAGE_AUTO) {
-                    viewModel().swapLanguage(
-                        sourceLanguage = targetLanguage,
-                        targetLanguage = sourceLanguage
-                    )
-
                     preference.sourceLanguage = targetLanguage
                     preference.targetLanguage = sourceLanguage
 
+                    viewModel.swapLanguage(
+                        sourceLanguage = sourceLanguage,
+                        targetLanguage = targetLanguage
+                    )
                     tracker.trackSwapLanguage(sourceLanguage, targetLanguage)
                 }
             }
@@ -202,23 +207,29 @@ class UI :
 
     override fun renderTargetLanguageSpinner(targetLanguage: String) = launch {
         translationBinder.targetLanguageSpinner.also { spinner ->
-            if (spinner.adapter != null) return@also
-
             val languages = languages.filter { it.key != LANGUAGE_AUTO }
-            val adapter = ArrayAdapter(
-                this@UI,
-                R.layout.language_item_layout,
-                languages.values.toTypedArray()
-            )
+            if (spinner.adapter == null) {
+                val adapter = ArrayAdapter(
+                    this@UI,
+                    R.layout.language_item_layout,
+                    languages.values.toTypedArray()
+                )
 
-            spinner.adapter = adapter
-            spinner.setSelection(languages.keys.indexOf(targetLanguage))
-            spinner.onItemSelectedListener = SpinnerItemSelectedListener { index ->
-                val selectedLanguage = languages.keys.elementAt(index)
-                preference.targetLanguage = selectedLanguage
+                spinner.adapter = adapter
+                spinner.onItemSelectedListener = SpinnerItemSelectedListener { index ->
+                    val selectedLanguage = languages.keys.elementAt(index)
+                    preference.targetLanguage = selectedLanguage
 
-                viewModel().setTargetLanguage(language = selectedLanguage)
-                viewModel().translate(targetLanguage = selectedLanguage)
+                    viewModel.setTargetLanguage(language = selectedLanguage)
+                    viewModel.translate(targetLanguage = selectedLanguage)
+                }
+
+                spinner.setSelection(languages.keys.indexOf(targetLanguage))
+            }
+
+            val languageIndex = languages.keys.indexOf(targetLanguage)
+            if (languageIndex != spinner.selectedItemPosition) {
+                spinner.setSelection(languageIndex)
             }
         }
     }
@@ -226,43 +237,46 @@ class UI :
     override fun renderQueryInput(
         sourceLanguage: String,
         targetLanguage: String,
-        newQuery: String?
+        instantQuery: String?
     ) = launch {
         translationBinder.queryInput.also { input ->
-            if (newQuery != null) {
-                input.setText(newQuery)
-                input.setSelection(newQuery.length)
+            instantQuery?.let { query ->
+                input.setText(query)
+                input.setSelection(query.length)
             }
 
             input.setRawInputType(TYPE_CLASS_TEXT)
 
-            input.setOnFocusChangeListener { _, focus ->
-                if (focus) {
-                    viewModel().startEditing()
-                }
-            }
-
             input.addQueryChangedListener(
-                scope = this,
+                threadScope = this,
                 onQueryChanged = { query ->
-                    viewModel().setQuery(query)
-                },
-                onQueryFixed = { query ->
-                    if (preference.useResponsiveTranslator) {
-                        viewModel().translate(query = query)
-                        tracker.trackTranslationData(sourceLanguage, targetLanguage, query)
-                    }
+                    viewModel.setQuery(query)
                 },
                 onQueryDone = { query ->
+                    if (preference.useResponsiveTranslator) {
+                        viewModel.translate(query = query)
+                        tracker.trackTranslationData(sourceLanguage, targetLanguage, query)
+                    }
+                }
+            )
+
+            input.addQueryActionListener(
+                threadScope = this,
+                onQueryDone = { query ->
                     if (!preference.useResponsiveTranslator) {
-                        viewModel().translate(query = query)
+                        viewModel.translate(query = query)
                         tracker.trackTranslationData(sourceLanguage, targetLanguage, query)
                     }
 
-                    viewModel().stopEditing()
+                    viewModel.stopEditing()
                     tracker.trackStopEditing(by = METHOD_KEYBOARD)
                 }
             )
+
+            input.setOnFocusChangeListener { _, focus ->
+                if (!focus) return@setOnFocusChangeListener
+                viewModel.startEditing()
+            }
 
             input.setOnLongClickListener {
                 tracker.trackShowContextMenu()
@@ -275,7 +289,7 @@ class UI :
         translationBinder.clearQueryIcon.also { icon ->
             icon.visibility = VISIBLE.takeIf { query.isNotEmpty() } ?: INVISIBLE
             icon.setOnClickListener {
-                viewModel().clearQuery()
+                viewModel.clearQuery()
                 tracker.trackClearQuery()
             }
         }
@@ -288,18 +302,18 @@ class UI :
         data: Data<Translation>
     ) = launch {
         translationBinder.translationInput.also { input ->
-            input.alpha = 1f.takeIf { !data.isLoading() || data.isError() } ?: 0.5f
+            input.alpha = 0.5f.takeIf { data.isLoading() || data.isError() } ?: 1f
+            input.text = data.result?.translatedText.orEmpty()
             input.isEnabled = data.let {
-                !it.isLoading() && !it.result?.translatedText.isNullOrBlank() || it.isError()
-            } && query.isNotBlank()
-            input.text = data.result?.translatedText.takeIf { query.isNotEmpty() }.orEmpty()
+                !it.isLoading() && !it.result?.translatedText.isNullOrBlank()
+            }
 
             input.setOnClickListener {
-                viewModel().displayResultDetail()
+                viewModel.displayResultDetail()
                 tracker.trackDisplayResultDetail(
-                    sourceLanguage,
-                    targetLanguage,
-                    query,
+                    sourceLanguage = sourceLanguage,
+                    targetLanguage = targetLanguage,
+                    query = query,
                     result = data.result?.translatedText.orEmpty()
                 )
             }
@@ -331,7 +345,7 @@ class UI :
 
     override fun processPacket() {
         if (::packet.isInitialized.not()) return
-        packet.newQuery?.let(::instantTranslate)
+        packet.instantQuery?.let(::instantTranslate)
     }
 
     override fun showToggleLayout() {
@@ -386,7 +400,7 @@ class UI :
     }
 
     override fun onBackgroundDismissed() {
-        viewModel().stopEditing()
+        viewModel.stopEditing()
     }
 
     override fun showSoftKeyboard() {
@@ -408,25 +422,20 @@ class UI :
     }
 
     override fun onHideSoftKeyboard() {
-        viewModel().stopEditing()
+        viewModel.stopEditing()
         tracker.trackStopEditing(by = METHOD_BACK_PRESSED)
     }
 
     override fun instantTranslate(query: String) {
-        viewModel().setToggleActivation(
+        viewModel.setToggleActivation(
             active = true,
             editMode = false,
             autoClearHistory = preference.autoClearHistory
         )
 
-        viewModel().setSourceLanguage(language = LANGUAGE_AUTO)
-
-        viewModel().translate(
-            toggleActive = true,
-            sourceLanguage = LANGUAGE_AUTO,
-            newQuery = query,
-            query = query
-        )
+        viewModel.setSourceLanguage(language = LANGUAGE_AUTO)
+        viewModel.setInstantQuery(instantQuery = query)
+        viewModel.translate(query = query)
 
         tracker.trackToggleActivation(active = true)
     }
@@ -453,7 +462,7 @@ class UI :
     }
 
     override fun stopService() {
-        viewModel().stopEditing()
+        viewModel.stopEditing()
         tracker.trackToggleService(active = false)
 
         stopSelf()

@@ -25,18 +25,18 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ActivityScoped
 @ExperimentalCoroutinesApi
 class Dispatcher @AssistedInject constructor(
-    viewModel: Lazy<ViewModel>,
     @ActivityContext context: Context,
-    @Assisted arg0: Renderer,
-    @Assisted arg1: Action
-) : BaseDispatcher<State, Intent>(viewModel),
+    @Assisted arg0: ViewModel,
+    @Assisted arg1: Renderer,
+    @Assisted arg2: Action
+) : BaseDispatcher<State, Intent>(arg0),
     SignalReceiver<Signal>,
-    Renderer by arg0,
-    Action by arg1 {
+    Renderer by arg1,
+    Action by arg2 {
     private val signalManager = SignalManager(context, receiver = this)
 
     @AssistedInject.Factory
-    interface Factory : DispatcherFactoryAssisted<Renderer, Action, Dispatcher>
+    interface Factory : DispatcherFactoryAssisted<ViewModel, Renderer, Action, Dispatcher>
 
     override fun dispatchStates(): Observer<Pair<State?, State>> = Observer {}
 

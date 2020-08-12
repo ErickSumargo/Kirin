@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
@@ -25,13 +25,13 @@ private val memCacheTextWatchers: HashMap<EditText, TextWatcher> = hashMapOf()
 @FlowPreview
 @ExperimentalCoroutinesApi
 fun EditText.addQueryChangedListener(
-    scope: CoroutineScope,
+    threadScope: CoroutineScope,
     onQueryChanged: suspend (String) -> Unit,
-    onQueryFixed: suspend (String) -> Unit,
     onQueryDone: suspend (String) -> Unit
 ) {
-    callbackFlow<String> {
+    channelFlow<String> {
         removeTextChangedListener(memCacheTextWatchers[this@addQueryChangedListener])
+        memCacheTextWatchers.clear()
 
         val textWatcher = doAfterTextChanged { editor ->
             safeOffer(editor.toString())
@@ -40,17 +40,24 @@ fun EditText.addQueryChangedListener(
         }
 
         awaitClose {
-            memCacheTextWatchers.clear()
             removeTextChangedListener(textWatcher)
+            memCacheTextWatchers.clear()
         }
     }
         .onEach(onQueryChanged)
-        .debounce(500)
+        .debounce(timeoutMillis = 500L)
         .filter { it.isNotEmpty() }
-        .onEach(onQueryFixed)
-        .launchIn(scope)
+        .onEach(onQueryDone)
+        .launchIn(threadScope)
+}
 
-    callbackFlow<String> {
+@FlowPreview
+@ExperimentalCoroutinesApi
+fun EditText.addQueryActionListener(
+    threadScope: CoroutineScope,
+    onQueryDone: suspend (String) -> Unit
+) {
+    channelFlow<String> {
         OnEditorActionListener { editor, action, _ ->
             when (action) {
                 IME_ACTION_DONE -> {
@@ -61,9 +68,11 @@ fun EditText.addQueryChangedListener(
             }
         }.also(::setOnEditorActionListener)
 
-        awaitClose { setOnEditorActionListener(null) }
+        awaitClose {
+            setOnEditorActionListener(null)
+        }
     }
         .filter { it.isNotEmpty() }
         .onEach(onQueryDone)
-        .launchIn(scope)
+        .launchIn(threadScope)
 }

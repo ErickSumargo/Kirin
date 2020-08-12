@@ -7,14 +7,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.ui.databinding.ProgressDialogLayoutBinding
-import javax.inject.Inject
 
 /**
  * Created by ErickSumargo on 01/06/20.
  */
 
 class ProgressDialog : DialogFragment() {
-    @Inject
     lateinit var logger: Logger
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

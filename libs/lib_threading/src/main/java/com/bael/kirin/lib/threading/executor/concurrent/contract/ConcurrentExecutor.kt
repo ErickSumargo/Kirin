@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.threading.executor.concurrent
+package com.bael.kirin.lib.threading.executor.concurrent.contract
 
 /**
  * Created by ErickSumargo on 01/06/20.

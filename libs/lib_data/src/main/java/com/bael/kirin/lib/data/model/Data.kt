@@ -12,5 +12,7 @@ data class Data<T>(
 
     fun isLoading() = loading
 
+    fun isSuccess() = result != null
+
     fun isError() = error != null
 }

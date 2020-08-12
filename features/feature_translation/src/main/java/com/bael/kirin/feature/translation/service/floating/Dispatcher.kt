@@ -25,7 +25,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class Dispatcher constructor(
     context: Context,
-    viewModel: Lazy<ViewModel>,
+    viewModel: ViewModel,
     renderer: Renderer,
     action: Action
 ) : BaseDispatcher<State, Intent>(viewModel),
@@ -58,11 +58,11 @@ class Dispatcher constructor(
 
             if (previousState?.sourceLanguage != newState.sourceLanguage ||
                 previousState.targetLanguage != newState.targetLanguage ||
-                previousState.newQuery != newState.newQuery) {
+                previousState.instantQuery != newState.instantQuery) {
                 renderQueryInput(
                     newState.sourceLanguage,
                     newState.targetLanguage,
-                    newState.newQuery
+                    newState.instantQuery
                 )
             }
 

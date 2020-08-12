@@ -4,8 +4,8 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.threading.contract.Threading
-import com.bael.kirin.lib.threading.executor.Executor
-import com.bael.kirin.lib.threading.executor.ExecutorSchema
+import com.bael.kirin.lib.threading.executor.contract.Executor
+import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
 import com.bael.kirin.lib.threading.util.Util.MainThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

@@ -1,13 +1,13 @@
 package com.bael.kirin.lib.threading.di.module
 
-import com.bael.kirin.lib.threading.executor.DefaultExecutor
-import com.bael.kirin.lib.threading.executor.Executor
-import com.bael.kirin.lib.threading.executor.concurrent.ConcurrentExecutor
-import com.bael.kirin.lib.threading.executor.concurrent.DefaultConcurrentExecutor
-import com.bael.kirin.lib.threading.executor.conflated.ConflatedExecutor
-import com.bael.kirin.lib.threading.executor.conflated.DefaultConflatedExecutor
-import com.bael.kirin.lib.threading.executor.queue.DefaultQueueExecutor
-import com.bael.kirin.lib.threading.executor.queue.QueueExecutor
+import com.bael.kirin.lib.threading.executor.concurrent.contract.ConcurrentExecutor
+import com.bael.kirin.lib.threading.executor.concurrent.implementation.DefaultConcurrentExecutor
+import com.bael.kirin.lib.threading.executor.conflated.contract.ConflatedExecutor
+import com.bael.kirin.lib.threading.executor.conflated.implementation.DefaultConflatedExecutor
+import com.bael.kirin.lib.threading.executor.contract.Executor
+import com.bael.kirin.lib.threading.executor.implementation.DefaultExecutor
+import com.bael.kirin.lib.threading.executor.queue.contract.QueueExecutor
+import com.bael.kirin.lib.threading.executor.queue.implementation.DefaultQueueExecutor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

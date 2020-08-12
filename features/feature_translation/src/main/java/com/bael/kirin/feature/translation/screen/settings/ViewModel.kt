@@ -26,20 +26,25 @@ class ViewModel @ViewModelInject constructor(
     private val configurator: SetupConfigurator
 ) : BaseViewModel<State, Intent>(initState, initIntent, savedStateHandle) {
 
-    fun setup() = launch(thread = IOThread) {
-        configurator.setup { config ->
-            val newIntent = when {
-                config.isLoading() -> {
-                    ConfigSetting
-                }
-                config.isError() -> {
-                    ConfigSetupFailed(message = config.error?.message.orEmpty())
-                }
-                else -> {
-                    ConfigSetupSuccess
-                }
-            }
+    fun setup(configSetupCompleted: Boolean) = launch(thread = IOThread) {
+        if (configSetupCompleted) {
+            val newIntent = ConfigSetupSuccess
             action(newIntent)
+        } else {
+            configurator.setup { config ->
+                val newIntent = when {
+                    config.isLoading() -> {
+                        ConfigSetting
+                    }
+                    config.isError() -> {
+                        ConfigSetupFailed(message = config.error?.message.orEmpty())
+                    }
+                    else -> {
+                        ConfigSetupSuccess
+                    }
+                }
+                action(newIntent)
+            }
         }
     }
 

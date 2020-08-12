@@ -11,7 +11,6 @@ import com.bael.kirin.lib.api.translation.model.entity.Translation
 import com.bael.kirin.lib.base.viewmodel.BaseViewModel
 import com.bael.kirin.lib.data.ext.orDefault
 import com.bael.kirin.lib.data.model.Data
-import com.bael.kirin.lib.threading.executor.ExecutorSchema.Queue
 import dagger.hilt.android.scopes.ServiceScoped
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -32,14 +31,14 @@ class ViewModel @Inject constructor(
         active: Boolean,
         editMode: Boolean,
         autoClearHistory: Boolean
-    ) = launch(schema = Queue) {
+    ) = launch {
         val newState = if (active || (!active && !autoClearHistory)) {
             state.copy(toggleActive = active)
         } else {
             state.copy(
                 toggleActive = active,
-                newQuery = "",
                 query = "",
+                instantQuery = "",
                 translationData = Data()
             )
         }
@@ -49,12 +48,27 @@ class ViewModel @Inject constructor(
         action(newIntent)
     }
 
-    fun setSourceLanguage(language: String) = launch(schema = Queue) {
-        val newState = state.copy(sourceLanguage = language)
+    fun startEditing() = launch {
+        val newIntent = StartEditing
+        action(newIntent)
+    }
+
+    fun stopEditing() = launch {
+        val newIntent = StopEditing
+        action(newIntent)
+    }
+
+    fun setSourceLanguage(language: String) = launch {
+        val newState = state.copy(
+            sourceLanguage = language,
+            query = "",
+            instantQuery = "",
+            translationData = Data()
+        )
         render(newState)
     }
 
-    fun setTargetLanguage(language: String) = launch(schema = Queue) {
+    fun setTargetLanguage(language: String) = launch {
         val newState = state.copy(targetLanguage = language)
         render(newState)
     }
@@ -62,18 +76,21 @@ class ViewModel @Inject constructor(
     fun swapLanguage(
         sourceLanguage: String,
         targetLanguage: String
-    ) = launch(schema = Queue) {
+    ) = launch {
         val newState = state.copy(
-            sourceLanguage = sourceLanguage,
-            targetLanguage = targetLanguage
+            sourceLanguage = targetLanguage,
+            targetLanguage = sourceLanguage,
+            query = "",
+            instantQuery = "",
+            translationData = Data()
         )
         render(newState)
     }
 
-    fun setQuery(query: String) = launch(schema = Queue) {
+    fun setQuery(query: String) = launch {
         val newState = state.copy(
-            newQuery = null,
             query = query,
+            instantQuery = null,
             translationData = state.translationData.takeIf {
                 query.isNotBlank()
             }.orDefault()
@@ -81,32 +98,28 @@ class ViewModel @Inject constructor(
         render(newState)
     }
 
-    fun clearQuery() = launch(schema = Queue) {
+    fun setInstantQuery(instantQuery: String) = launch {
         val newState = state.copy(
-            newQuery = "",
+            query = instantQuery,
+            instantQuery = instantQuery
+        )
+        render(newState)
+    }
+
+    fun clearQuery() = launch {
+        val newState = state.copy(
             query = "",
+            instantQuery = "",
             translationData = Data()
         )
         render(newState)
     }
 
-    fun startEditing() = launch(schema = Queue) {
-        val newIntent = StartEditing
-        action(newIntent)
-    }
-
-    fun stopEditing() = launch(schema = Queue) {
-        val newIntent = StopEditing
-        action(newIntent)
-    }
-
     fun translate(
-        toggleActive: Boolean = state.toggleActive,
         sourceLanguage: String = state.sourceLanguage,
         targetLanguage: String = state.targetLanguage,
-        newQuery: String? = state.newQuery,
         query: String = state.query
-    ) = launch(schema = Queue) {
+    ) = launch {
         if (query.isBlank()) return@launch
 
         translateInteractor(
@@ -115,25 +128,18 @@ class ViewModel @Inject constructor(
             }.orEmpty(),
             targetLanguage = targetLanguage,
             query = query,
-            result = ::onTranslationResult
+            response = ::onTranslationResponse
         )
-
-        val newState = state.copy(
-            toggleActive = toggleActive,
-            sourceLanguage = sourceLanguage,
-            targetLanguage = targetLanguage,
-            newQuery = newQuery,
-            query = query
-        )
-        render(newState)
     }
 
-    fun onTranslationResult(data: Data<Translation>) = launch(schema = Queue) {
+    private fun onTranslationResponse(data: Data<Translation>) = launch {
+        if (data.isSuccess() && !state.translationData.isLoading()) return@launch
+
         val newState = state.copy(translationData = data)
         render(newState)
     }
 
-    fun displayResultDetail() = launch(schema = Queue) {
+    fun displayResultDetail() = launch {
         val newIntent = DisplayResultDetail(
             sourceLanguage = state.sourceLanguage,
             targetLanguage = state.targetLanguage,

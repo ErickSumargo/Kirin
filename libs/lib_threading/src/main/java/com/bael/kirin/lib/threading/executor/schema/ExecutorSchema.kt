@@ -1,4 +1,4 @@
-package com.bael.kirin.lib.threading.executor
+package com.bael.kirin.lib.threading.executor.schema
 
 /**
  * Created by ErickSumargo on 01/06/20.

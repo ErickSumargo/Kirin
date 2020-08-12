@@ -13,6 +13,6 @@ interface TranslateInteractor {
         sourceLanguage: String,
         targetLanguage: String,
         query: String,
-        result: (Data<Translation>) -> Unit
+        response: (Data<Translation>) -> Unit
     )
 }

@@ -62,6 +62,7 @@ class UI :
         super.onCreate(savedInstanceState)
 
         dispatcher = dispatcherFactory.create(
+            viewModel = viewModel,
             renderer = this,
             action = this
         ).also { it.observe(lifecycleOwner = this) }

@@ -1,6 +1,6 @@
-package com.bael.kirin.lib.threading.executor.concurrent
+package com.bael.kirin.lib.threading.executor.concurrent.implementation
 
-import kotlinx.coroutines.sync.Mutex
+import com.bael.kirin.lib.threading.executor.concurrent.contract.ConcurrentExecutor
 import javax.inject.Inject
 
 /**
@@ -8,7 +8,6 @@ import javax.inject.Inject
  */
 
 class DefaultConcurrentExecutor @Inject constructor() : ConcurrentExecutor {
-    private val mutex: Mutex = Mutex()
 
     override suspend fun run(block: suspend () -> Unit) {
         block()

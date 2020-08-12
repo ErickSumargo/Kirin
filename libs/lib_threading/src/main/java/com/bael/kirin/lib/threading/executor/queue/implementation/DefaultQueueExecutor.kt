@@ -1,5 +1,6 @@
-package com.bael.kirin.lib.threading.executor.queue
+package com.bael.kirin.lib.threading.executor.queue.implementation
 
+import com.bael.kirin.lib.threading.executor.queue.contract.QueueExecutor
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject

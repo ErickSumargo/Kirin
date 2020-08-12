@@ -5,5 +5,5 @@ package com.bael.kirin.feature.translation.service.floating
  */
 
 data class Packet(
-    val newQuery: String? = null
+    val instantQuery: String? = null
 )

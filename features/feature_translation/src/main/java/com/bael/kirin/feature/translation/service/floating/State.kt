@@ -12,7 +12,7 @@ data class State(
     val toggleActive: Boolean = false,
     val sourceLanguage: String = "",
     val targetLanguage: String = "",
-    val newQuery: String? = null,
     val query: String = "",
+    val instantQuery: String? = null, // query either retrieved from reset or context menu copy event
     val translationData: Data<Translation> = Data()
 ) : BaseState()
