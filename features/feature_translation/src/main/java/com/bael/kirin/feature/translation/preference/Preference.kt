@@ -10,7 +10,10 @@ import javax.inject.Inject
 
 class Preference @Inject constructor(preference: Preference) : Preference by preference {
     var configSetupCompleted: Boolean
-        get() = true
+        get() = read(
+            key = PREFERENCE_CONFIG_SETUP_COMPLETED,
+            defaultValue = false
+        )
         set(value) = write(
             key = PREFERENCE_CONFIG_SETUP_COMPLETED,
             value = value
