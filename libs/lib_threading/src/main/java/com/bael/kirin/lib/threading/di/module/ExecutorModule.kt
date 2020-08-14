@@ -19,7 +19,7 @@ import dagger.hilt.android.components.ApplicationComponent
 
 @Module
 @InstallIn(ApplicationComponent::class)
-abstract class ThreadingModule {
+abstract class ExecutorModule {
 
     @Binds
     abstract fun bindExecutor(executor: DefaultExecutor): Executor

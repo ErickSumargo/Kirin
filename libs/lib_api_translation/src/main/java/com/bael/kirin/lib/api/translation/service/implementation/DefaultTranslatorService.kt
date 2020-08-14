@@ -12,6 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import javax.inject.Inject
+import javax.inject.Provider
 
 /**
  * Created by ErickSumargo on 15/06/20.
@@ -19,10 +20,9 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class DefaultTranslatorService @Inject constructor(
-    translator: Translate
+    private val translator: Provider<Translate>
 ) : BaseService(),
-    TranslatorService,
-    Translate by translator {
+    TranslatorService {
 
     override fun translate(
         sourceLanguage: String,
@@ -30,7 +30,7 @@ class DefaultTranslatorService @Inject constructor(
         query: String
     ): Flow<Response<String>> = channelFlow {
         val response = get {
-            translate(
+            translator.get().translate(
                 query,
                 sourceLanguage(sourceLanguage),
                 targetLanguage(targetLanguage),
