@@ -11,8 +11,6 @@ import javax.inject.Inject
 class TranslationTransformer @Inject constructor() : DataTransformer<String, Translation> {
 
     override fun transform(response: String): Translation {
-        return Translation(
-            translatedText = response
-        )
+        return Translation(translatedText = response)
     }
 }

@@ -18,5 +18,5 @@ abstract class LoggerModule {
 
     @Singleton
     @Binds
-    abstract fun bindLogger(logger: FirebaseCrashlytics): Logger
+    abstract fun bindLogger(crashlytics: FirebaseCrashlytics): Logger
 }
