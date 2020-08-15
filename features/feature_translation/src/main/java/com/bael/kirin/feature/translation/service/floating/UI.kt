@@ -371,7 +371,7 @@ class UI :
 
         if (!editMode) return
         launch(coroutineContext) {
-            delay(100)
+            delay(timeMillis = 100L)
             translationBinder.queryInput.requestFocus()
         }
     }
@@ -407,7 +407,7 @@ class UI :
         updateTranslationLayout(FLAG_NOT_TOUCH_MODAL)
         translationBinder.queryInput.also { input ->
             launch(coroutineContext) {
-                delay(150)
+                delay(timeMillis = 150L)
                 input.showSoftKeyboard()
             }
         }
