@@ -5,7 +5,6 @@ import com.bael.kirin.lib.api.translation.model.entity.Translation
 import com.bael.kirin.lib.api.translation.repository.contract.TranslatorRepository
 import com.bael.kirin.lib.data.model.Data
 import com.bael.kirin.lib.network.interactor.BaseInteractor
-import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Conflated
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
@@ -26,7 +25,7 @@ class DefaultTranslateInteractor @Inject constructor(
         targetLanguage: String,
         query: String,
         response: (Data<Translation>) -> Unit
-    ) = launch(schema = Conflated) {
+    ) = launch {
         val translationDataFlow = translatorRepository.get(
             sourceLanguage,
             targetLanguage,

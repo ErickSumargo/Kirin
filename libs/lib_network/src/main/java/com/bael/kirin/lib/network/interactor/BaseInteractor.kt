@@ -4,6 +4,7 @@ import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.threading.contract.Threading
 import com.bael.kirin.lib.threading.executor.contract.Executor
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
+import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Conflated
 import com.bael.kirin.lib.threading.util.Util.IOThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -15,7 +16,8 @@ import kotlin.coroutines.CoroutineContext
  */
 
 abstract class BaseInteractor(
-    override val coroutineContext: CoroutineContext = IOThread
+    override val coroutineContext: CoroutineContext = IOThread,
+    override val executorSchema: ExecutorSchema = Conflated
 ) : Threading {
     @Inject
     internal lateinit var executor: Executor

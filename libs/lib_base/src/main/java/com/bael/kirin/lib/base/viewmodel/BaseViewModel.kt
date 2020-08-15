@@ -10,6 +10,7 @@ import com.bael.kirin.lib.threading.contract.Threading
 import com.bael.kirin.lib.threading.executor.contract.Executor
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Concurrent
+import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Queue
 import com.bael.kirin.lib.threading.util.Util.DefaultThread
 import com.bael.kirin.lib.threading.util.Util.MainThread
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +31,8 @@ abstract class BaseViewModel<S, I>(
     initState: S,
     initIntent: I?,
     private val savedStateHandle: SavedStateHandle? = null,
-    override val coroutineContext: CoroutineContext = DefaultThread
+    override val coroutineContext: CoroutineContext = DefaultThread,
+    override val executorSchema: ExecutorSchema = Queue
 ) : ViewModel(),
     Threading {
     @Inject
