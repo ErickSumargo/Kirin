@@ -6,6 +6,7 @@ import com.bael.kirin.lib.logger.contract.Logger
 import com.bael.kirin.lib.threading.contract.Threading
 import com.bael.kirin.lib.threading.executor.contract.Executor
 import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema
+import com.bael.kirin.lib.threading.executor.schema.ExecutorSchema.Queue
 import com.bael.kirin.lib.threading.util.Util.MainThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -20,6 +21,8 @@ abstract class BaseService :
     LifecycleService(),
     Threading {
     override val coroutineContext: CoroutineContext = MainThread
+
+    override val executorSchema: ExecutorSchema = Queue
 
     @Inject
     internal lateinit var executor: Executor

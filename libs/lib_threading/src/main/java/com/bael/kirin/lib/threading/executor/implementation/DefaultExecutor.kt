@@ -16,13 +16,11 @@ import javax.inject.Inject
 
 /**
  * Facade class to decide which executor to be used to execute task based on schema.
- *
- * @property queueExecutor is the default one.
  */
 class DefaultExecutor @Inject constructor(
-    private val queueExecutor: QueueExecutor,
+    private val concurrentExecutor: ConcurrentExecutor,
     private val conflatedExecutor: ConflatedExecutor,
-    private val concurrentExecutor: ConcurrentExecutor
+    private val queueExecutor: QueueExecutor
 ) : Executor,
     QueueExecutor by queueExecutor,
     ConflatedExecutor by conflatedExecutor,
