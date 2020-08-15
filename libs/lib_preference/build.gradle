@@ -9,6 +9,12 @@ plugins.forEach { plugin ->
     apply plugin: plugin
 }
 
+android {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
 def deps = [
     "hilt",
     "ktx",
