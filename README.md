@@ -1,10 +1,10 @@
-[<img src="assets/logo.png" width="30%">]()
+[<img src="assets/logo.png" width="290" height="120">]()
 [<img align="right" src="assets/playstore.png" width="180" height="75">]()
 
 [![Build Status](https://travis-ci.com/ErickSumargo/Kirin.svg?branch=develop)](https://travis-ci.com/ErickSumargo/Kirin)
 [![codecov](https://codecov.io/gh/ErickSumargo/Kirin/branch/develop/graph/badge.svg)](https://codecov.io/gh/ErickSumargo/Kirin)
 
-Having words wished to be translated by jumping to other translator apps to do the job is always tedious activity. 
+Having words wished to be translated by jumping to other translator apps to do the job is always a tedious activity. 
 Kirin is born to eliminate these routines by you can do any language translation in any apps you are in now.
 
 ## Features
