@@ -45,7 +45,7 @@ fun EditText.addQueryChangedListener(
         }
     }
         .onEach(onQueryChanged)
-        .debounce(timeoutMillis = 500L)
+        .debounce(timeoutMillis = 750L)
         .filter { it.isNotEmpty() }
         .onEach(onQueryDone)
         .launchIn(threadScope)
