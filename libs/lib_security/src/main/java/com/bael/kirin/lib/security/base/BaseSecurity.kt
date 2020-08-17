@@ -1,10 +1,12 @@
 package com.bael.kirin.lib.security.base
 
 import android.content.Context
+import android.security.keystore.KeyGenParameterSpec
 import androidx.security.crypto.EncryptedFile
+import androidx.security.crypto.EncryptedFile.FileEncryptionScheme
 import androidx.security.crypto.EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKeys.AES256_GCM_SPEC
-import androidx.security.crypto.MasterKeys.getOrCreate
 import com.bael.kirin.lib.security.constant.SCHEME_AES
 import com.bael.kirin.lib.security.contract.Scheme
 import java.io.File
@@ -22,29 +24,44 @@ abstract class BaseSecurity(
         Cipher.getInstance(cipherScheme)
     }
 
+    protected fun generateSecretKey(key: String): SecretKeySpec {
+        return SecretKeySpec(key.toByteArray(), cipherScheme)
+    }
+
     protected fun getEncryptedFile(
         context: Context,
         fileName: String,
-        readMode: Boolean
+        readMode: Boolean,
+        fileEncryptionScheme: FileEncryptionScheme = AES256_GCM_HKDF_4KB
     ): EncryptedFile {
-        val file = File(
-            context.filesDir,
-            fileName
-        ).also { file ->
-            if (!readMode && file.exists()) {
-                file.delete()
-            }
-        }
+        val file = getFile(context.filesDir, fileName, readMode)
+        val masterKey = generateMasterKey(context)
 
         return EncryptedFile.Builder(
-            file,
             context,
-            getOrCreate(AES256_GCM_SPEC),
-            AES256_GCM_HKDF_4KB
+            file,
+            masterKey,
+            fileEncryptionScheme
         ).build()
     }
 
-    protected fun generateSecretKey(key: String): SecretKeySpec {
-        return SecretKeySpec(key.toByteArray(), cipherScheme)
+    private fun getFile(
+        directory: File,
+        fileName: String,
+        readMode: Boolean
+    ): File {
+        return File(directory, fileName).also { file ->
+            if (readMode || !file.exists()) return@also
+            file.delete()
+        }
+    }
+
+    private fun generateMasterKey(
+        context: Context,
+        keyGenParameterSpec: KeyGenParameterSpec = AES256_GCM_SPEC
+    ): MasterKey {
+        return MasterKey.Builder(context)
+            .setKeyGenParameterSpec(keyGenParameterSpec)
+            .build()
     }
 }
