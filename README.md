@@ -1,5 +1,5 @@
 [<img src="assets/logo.png" width="290" height="120">]()
-[<img align="right" src="assets/playstore.png" width="180" height="75">]()
+[<img align="right" src="assets/playstore.png" width="180" height="75">](https://play.google.com/store/apps/details?id=com.bael.kirin)
 
 [![Build Status](https://travis-ci.com/ErickSumargo/Kirin.svg?branch=develop)](https://travis-ci.com/ErickSumargo/Kirin)
 [![codecov](https://codecov.io/gh/ErickSumargo/Kirin/branch/develop/graph/badge.svg)](https://codecov.io/gh/ErickSumargo/Kirin)
